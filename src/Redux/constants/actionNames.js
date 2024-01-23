@@ -1,3 +1,5 @@
 export const TOGGLE_ON_SEARCHBAR_FOCUS = "toggle_on_searchbar_focus"
 export const TOGGLE_OFF_SEARCHBAR_FOCUS = "toggle_off_searchbar_focus"
 export const UPDATE_ALL_POSTS = "update_all_posts"
+export const LOGGED_IN_TRUE = "logged_in_true"
+export const LOGGED_IN_FALSE = "logged_in_false"
