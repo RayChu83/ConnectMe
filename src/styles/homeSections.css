@@ -1,0 +1,133 @@
+main .section{
+  background-color: #16161e;
+  width: 100%;
+  height: fit-content;
+  border-radius: 12px;
+  padding: 20px;
+  transition: .2s ease-in-out;
+}
+main .section:hover, .search--bar:hover{
+  filter: drop-shadow(0 3px 5px #121218);
+}
+#sections--container{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  column-gap: 20px;
+}
+#sections--container aside{
+  position: sticky;
+  top: 70px;
+}
+
+
+/* SECTION ONE STYLES */
+
+
+#section--one section{
+  padding: 12px;
+  margin: 15px 0;
+  background-color: #20212f;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* SECTION TWO STYLES */
+
+
+.search--bar{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #292b3d;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  transition: .2s ease-in-out;
+}
+.search--bar button, .search--bar input{
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.search--bar button{
+  cursor: pointer;
+}
+.search--bar input{
+  width: 100%;
+  font-size: 1em;
+}
+.post--form{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.post--form input{
+  height: 40px;
+  font-size: 1em;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+.post{
+  padding: 12px;
+  margin: 15px 0;
+  background-color: #20212f;
+  border-radius: 12px;
+  max-height: 250px;
+  overflow:auto;
+}
+.post--details{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.post--details .user--details{
+  display: flex;
+  align-items: center ;
+  gap: 12px;
+  cursor: pointer;
+}
+
+
+/* SECTION THREE STYLES */
+
+
+#section--three{
+  height: fit-content;
+}
+#profile{
+  text-align: center;
+}
+#profile .profile--img{
+  display: block;
+  margin: auto;
+}
+.understated{
+  color: gray;
+}
+
+
+
+
+@media (max-width: 1250px) {
+  #section--one{
+      display: none;
+  }
+  #sections--container{
+      grid-template-columns: 2fr 1.25fr;
+  }
+}
+@media (max-width: 750px) {
+  #section--three{
+      display: none;
+  }
+  #sections--container{
+      display: block;
+  }
+}
