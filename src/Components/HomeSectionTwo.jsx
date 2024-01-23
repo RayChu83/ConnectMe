@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSearchbarUnfocused } from '../Redux/actions/actions';
 
 export default function HomeSectionTwo() {
+  const searchBarRef = useRef(null);
+  const dispatch = useDispatch()
+  const isSearchbarFocused = useSelector(state => state.searchbarFocus)
+
+  useEffect(() => {
+    if (isSearchbarFocused) {
+      searchBarRef.current.focus();
+      dispatch(setSearchbarUnfocused())
+    }
+  }, [isSearchbarFocused]);
+
   return (
     <div id="section--two">
       <form className="search--bar">
         <button><i className="fa-solid fa-magnifying-glass understated"></i></button>
-        <input type="text" placeholder="Search"></input>
+        <input type="text" placeholder="Search" ref={searchBarRef}></input>
       </form>
       <div className="section">
         <form className="post--form">
