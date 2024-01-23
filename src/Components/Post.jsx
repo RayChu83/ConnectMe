@@ -1,6 +1,10 @@
 import React from 'react'
 
 export default function Post(props) {
+  const convertDate = (timestamp) => {
+    let dateObject = timestamp.toDate()
+    return `${dateObject.getMonth() + 1} / ${dateObject.getDate()} / ${dateObject.getFullYear()}`
+  }
   return (
     <article className="post">
       <div className="post--details">
@@ -9,7 +13,7 @@ export default function Post(props) {
         <h3>{props.username}</h3>
         </div>
           <small className="understated">
-            Jan 21, 2024
+            {convertDate(props.created)}
           </small>
         </div>
       <section className="post-content">

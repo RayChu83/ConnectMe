@@ -30,6 +30,9 @@ body{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.text--center{
+  text-align: center;
+}
 main .section{
   background-color: #16161e;
   width: 100%;

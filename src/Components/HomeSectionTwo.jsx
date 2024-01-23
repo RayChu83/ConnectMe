@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
 import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
@@ -18,13 +18,14 @@ export default function HomeSectionTwo() {
       searchBarRef.current.focus();
       dispatch(setSearchbarUnfocused())
     }
+    // eslint-disable-next-line
   }, [isSearchbarFocused]);
 
   useEffect(() => {
+    const q = query(collection(db, "posts"), orderBy("created", "desc"));
     const unsubscribe = onSnapshot(
-      collection(db, "posts"), 
+      q, 
       (snapshot) => {
-        // create redux state which contains all docs, every onSnapshot listen update the state with dispatch
         let posts = snapshot.docs.map(doc => ({
           ...doc.data()
         }))
@@ -34,6 +35,7 @@ export default function HomeSectionTwo() {
         console.error(error)
       });
     return unsubscribe
+    // eslint-disable-next-line
   }, [])
   return (
     <div id="section--two">
@@ -47,9 +49,9 @@ export default function HomeSectionTwo() {
           <input type="text" placeholder="Say Hello!"></input>
           <button type="submit" className="cta">Post</button>
         </form>
-          {allPosts && allPosts.map((post, index) => (
-            <Post username={post.username} content={post.content} key={index}/>
-          ))}
+          {allPosts ? allPosts.map((post, index) => (
+            <Post username={post.username} content={post.content} created={post.created} key={index}/>
+          )) : <p className='understated text--center'>Loading...</p>}
       </div>
     </div>
   )
