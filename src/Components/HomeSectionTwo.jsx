@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { collection, onSnapshot } from "firebase/firestore";
+
 import { setSearchbarUnfocused } from '../Redux/actions/actions';
+import { db } from '../Firebase/firebase';
 
 export default function HomeSectionTwo() {
   const searchBarRef = useRef(null);
@@ -8,12 +11,27 @@ export default function HomeSectionTwo() {
   const isSearchbarFocused = useSelector(state => state.searchbarFocus)
 
   useEffect(() => {
+    // sort of like a event listener, where redux state determines if search bar is focused or not
     if (isSearchbarFocused) {
       searchBarRef.current.focus();
       dispatch(setSearchbarUnfocused())
     }
   }, [isSearchbarFocused]);
 
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts"), 
+      (snapshot) => {
+        // create redux state which contains all docs, every onSnapshot listen update the state with dispatch
+        snapshot.docs.map(doc => ({
+          ...doc.data()
+        }))
+      },
+      (error) => {
+        console.error(error)
+      });
+    return unsubscribe
+  }, [])
   return (
     <div id="section--two">
       <form className="search--bar">
