@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import "../styles/nav.css"
 import navLogo from "../Images/ConnectMe.png"
-import { setLoggedInTrue, setSearchbarFocused } from '../Redux/actions/actions'
+import { setLoggedInFalse, setSearchbarFocused } from '../Redux/actions/actions'
 
 export default function NavigationBar() {
   const dispatch = useDispatch()
@@ -12,7 +12,7 @@ export default function NavigationBar() {
     dispatch(setSearchbarFocused())
   }
   const login = () => {
-    dispatch(setLoggedInTrue())
+    dispatch(setLoggedInFalse())
   }
   return (
     <nav>

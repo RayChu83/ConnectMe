@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Google from "../Images/googleLogo.png"
 
 export default function Register() {
   return (
@@ -12,9 +13,10 @@ export default function Register() {
         <input type="text" placeholder='Email Address' id='login--email' required/>
         <label htmlFor="login--password">Password:</label>
         <input type="password" placeholder='Password' id='login--password' required/>
+        <button className='google--account--access' type='button'><img src={Google} alt="Google Logo" height="25"/>Register With Google</button>
         <button className='cta expand'>Register</button>
       </form>
-      <small>Already have an existing account, <Link to="/login">Login</Link></small>
+      <small>Already have an existing account, <strong><Link to="/login" replace>Login</Link></strong></small>
     </section>
   )
 }
