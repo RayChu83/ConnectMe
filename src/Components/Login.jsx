@@ -12,6 +12,7 @@ export default function Login() {
         <input type="text" placeholder='Email Address' id='login--email' required/>
         <label htmlFor="login--password">Password:</label>
         <input type="password" placeholder='Password' id='login--password' required/>
+        <small className='understated'>Show Password</small>
         <button className='google--account--access' type='button'><img src={Google} alt="Google Logo" height="16"/>Login With Google</button>
         <button className='cta expand'>Login</button>
       </form>

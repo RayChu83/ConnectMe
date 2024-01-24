@@ -85,7 +85,6 @@ main .section:hover, .search--bar:hover{
 .post--details{
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 .post--details .user--details{
   display: flex;

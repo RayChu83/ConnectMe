@@ -13,6 +13,7 @@ export default function Register() {
         <input type="text" placeholder='Email Address' id='login--email' required/>
         <label htmlFor="login--password">Password:</label>
         <input type="password" placeholder='Password' id='login--password' required/>
+        <small className='understated'>Show Password</small>
         <button className='google--account--access' type='button'><img src={Google} alt="Google Logo" height="25"/>Register With Google</button>
         <button className='cta expand'>Register</button>
       </form>
