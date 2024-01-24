@@ -1,6 +1,6 @@
 import { LOGGED_IN_FALSE, LOGGED_IN_TRUE } from "../constants/actionNames";
 
-const loggedInReducer = (state = true, action) => {
+const loggedInReducer = (state = false, action) => {
     switch(action.type) {
         case LOGGED_IN_TRUE:
             return true

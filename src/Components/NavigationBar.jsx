@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import "../styles/nav.css"
-import "../Images/ConnectMe.png"
+import navLogo from "../Images/ConnectMe.png"
 import { setLoggedInTrue, setSearchbarFocused } from '../Redux/actions/actions'
 
 export default function NavigationBar() {
@@ -17,7 +17,7 @@ export default function NavigationBar() {
   return (
     <nav>
       <Link to="/">
-        <img src="ConnectMe.png" alt="ConnectMe Logo"></img>
+        <img src={navLogo} alt="ConnectMe Logo"></img>
       </Link>
       <i className="fa-solid fa-bars nav--bars" style={{display: "none"}}></i>
       <ul>

@@ -3,8 +3,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import store from './Redux/store';
 import AppLayout from './Layouts/AppLayout';
-import ProtectedRouteLayout from './Layouts/ProtectedRouteLayout';
+import LoggedInProtectedLayout from './Layouts/LoggedInProtectedLayout';
+import LoggedOutProtectedLayout from './Layouts/LoggedOutProtectedLayout';
 import Home from './Components/Home';
+import Login from './Components/Login';
+import Register from './Components/Register';
 import './App.css';
 
 function App() {
@@ -13,10 +16,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />}>
-            <Route element={<ProtectedRouteLayout />}>
+            <Route element={<LoggedInProtectedLayout />}>
               <Route index element={<Home />}/>
             </Route>
-            <Route path='login' element={<h1>Login Page</h1>}/>
+          </Route>
+          <Route element={<LoggedOutProtectedLayout />}>
+            <Route path='login' element={<Login />}/>
+            <Route path='register' element={<Register />}/>
           </Route>
         </Routes>
       </BrowserRouter>
