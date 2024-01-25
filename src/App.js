@@ -1,3 +1,4 @@
+import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -9,20 +10,23 @@ import Home from './Components/Home';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import './App.css';
+import UserLayout from './Layouts/UserLayout';
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AppLayout />}>
-            <Route element={<LoggedInProtectedLayout />}>
-              <Route index element={<Home />}/>
+          <Route element={<UserLayout/>}>
+            <Route path="/" element={<AppLayout />}>
+              <Route element={<LoggedInProtectedLayout />}>
+                <Route index element={<Home />}/>
+              </Route>
             </Route>
-          </Route>
-          <Route element={<LoggedOutProtectedLayout />}>
-            <Route path='login' element={<Login />}/>
-            <Route path='register' element={<Register />}/>
+            <Route element={<LoggedOutProtectedLayout />}>
+              <Route path='login' element={<Login />}/>
+              <Route path='register' element={<Register />}/>
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

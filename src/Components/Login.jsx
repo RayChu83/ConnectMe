@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
+import { auth } from '../Firebase/firebase'
 
 import Google from "../Images/googleLogo.png"
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 export default function Login() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -13,11 +15,17 @@ export default function Login() {
     const {name, value} = e.target
     setFormData(prevState => ({...prevState, [name] : value}))
   }
-  console.log(formData)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const {email, password} = formData
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => console.log("User Logged in!"))
+      .catch(err => console.error(err.message))
+  }
   return (
     <section>
       <h1>Log In to an existing <br /> account.</h1>
-      <form className='account--access--forms'>
+      <form className='account--access--forms' onSubmit={handleSubmit}>
         <label htmlFor="login--email">Email Address:</label>
         <input name='email' onChange={updateFormData} type="text" placeholder='Email Address' id='login--email' required/>
         <label htmlFor="login--password">Password:</label>
