@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 
 export default function Login() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
+  const [error, setError] = useState("")
   const changePasswordVisibility = () => {
     setIsPasswordShown(prevState => !prevState)
   }
@@ -20,18 +21,19 @@ export default function Login() {
     const {email, password} = formData
     signInWithEmailAndPassword(auth, email, password)
       .then(() => console.log("User Logged in!"))
-      .catch(err => console.error(err.message))
+      .catch(err => setError(err.message))
   }
   const googleLogin = () => {
     signInWithPopup(auth, provider)
       .then(res => 
         console.log("success")
       )
-      .catch(err => console.error(err))
+      .catch(err => setError(err.message))
   }
   return (
     <section>
       <h1>Log In to an existing <br /> account.</h1>
+      <p className='understated danger--text'>{error && `* ${error}`}</p>
       <form className='account--access--forms' onSubmit={handleSubmit}>
         <label htmlFor="login--email">Email Address:</label>
         <input name='email' onChange={updateFormData} value={formData.email} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>

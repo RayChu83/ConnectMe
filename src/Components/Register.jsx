@@ -7,6 +7,7 @@ import { auth, provider } from '../Firebase/firebase'
 
 export default function Register() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
+  const [error, setError] = useState("")
   const changePasswordVisibility = () => {
     setIsPasswordShown(prevState => !prevState)
   }
@@ -20,18 +21,19 @@ export default function Register() {
     const {email, password} = formData
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => console.log("User signed up!"))
-      .catch(err => console.error(err.message))
+      .catch(err => setError(err.message))
   }
   const googleRegister = () => {
     signInWithPopup(auth, provider)
       .then(res => 
         console.log("success")
       )
-      .catch(err => console.error(err))
+      .catch(err => setError(err.message))
   }
   return (
     <section>
       <h1>Register and Join us<br /> today.</h1>
+      <p className='understated danger--text'>{error && `* ${error}`}</p>
       <form className='account--access--forms' onSubmit={handleSubmit}>
         <label htmlFor="login--username">Username:</label>
         <input name='username' onChange={updateFormData} value={formData.username} type="text" placeholder='Username (Max 20 Characters)' id='login--username' maxLength="20" minLength="3" required autoComplete='true'/>

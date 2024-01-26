@@ -20,7 +20,7 @@ export const setAllPosts = (payload) => {
 }
 export const setLoggedInTrue = () => {
     return {
-        type : LOGGED_IN_TRUE
+        type : LOGGED_IN_TRUE,
     }
 }
 export const setLoggedInFalse = () => {

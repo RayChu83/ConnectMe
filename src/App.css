@@ -39,3 +39,6 @@ body{
 .pointer{
   cursor: pointer;
 }
+.danger--text{
+  color: rgb(149, 52, 52);
+}
