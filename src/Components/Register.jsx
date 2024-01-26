@@ -34,11 +34,11 @@ export default function Register() {
       <h1>Register and Join us<br /> today.</h1>
       <form className='account--access--forms' onSubmit={handleSubmit}>
         <label htmlFor="login--username">Username:</label>
-        <input name='username' onChange={updateFormData} type="text" placeholder='Username (Max 20 Characters)' id='login--username' maxLength="20" minLength="3" required autoComplete='true'/>
+        <input name='username' onChange={updateFormData} value={formData.username} type="text" placeholder='Username (Max 20 Characters)' id='login--username' maxLength="20" minLength="3" required autoComplete='true'/>
         <label htmlFor="login--email">Email Address:</label>
-        <input name='email' onChange={updateFormData} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>
+        <input name='email' onChange={updateFormData} value={formData.email} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>
         <label htmlFor="login--password">Password:</label>
-        <input name='password' onChange={updateFormData} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' minLength="8" required autoComplete='true'/>
+        <input name='password' onChange={updateFormData} value={formData.password} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' minLength="8" required autoComplete='true'/>
         <small className='understated pointer' onClick={changePasswordVisibility}>{isPasswordShown ? "Hide Password" : "Show Password"}</small>
         <button className='google--account--access' type='button' onClick={googleRegister}><img src={Google} alt="Google Logo" height="16"/>Register With Google</button>
         <button className='cta expand'>Register</button>

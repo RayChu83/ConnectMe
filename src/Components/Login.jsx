@@ -34,9 +34,9 @@ export default function Login() {
       <h1>Log In to an existing <br /> account.</h1>
       <form className='account--access--forms' onSubmit={handleSubmit}>
         <label htmlFor="login--email">Email Address:</label>
-        <input name='email' onChange={updateFormData} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>
+        <input name='email' onChange={updateFormData} value={formData.email} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>
         <label htmlFor="login--password">Password:</label>
-        <input name='password' onChange={updateFormData} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' required autoComplete='true'/>
+        <input name='password' onChange={updateFormData} value={formData.password} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' required autoComplete='true'/>
         <small className='understated pointer' onClick={changePasswordVisibility}>{isPasswordShown ? "Hide Password" : "Show Password"}</small>
         <button className='google--account--access' type='button' onClick={googleLogin}><img src={Google} alt="Google Logo" height="16"/>Login With Google</button>
         <button className='cta expand'>Login</button>

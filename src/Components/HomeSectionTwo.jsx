@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
@@ -8,10 +8,13 @@ import Post from './Post';
 
 export default function HomeSectionTwo() {
   const searchBarRef = useRef(null);
+  const [searchbar, setSearchbar] = useState("")
   const dispatch = useDispatch()
   const allPosts = useSelector(state => state.allPosts)
   const isSearchbarFocused = useSelector(state => state.searchbarFocus)
-
+  const handleSearchbarChange = (e) => {
+    setSearchbar(e.target.value)
+  }
   useEffect(() => {
     // sort of like a event listener, where redux state determines if search bar is focused or not
     if (isSearchbarFocused) {
@@ -22,26 +25,26 @@ export default function HomeSectionTwo() {
   }, [isSearchbarFocused]);
 
   useEffect(() => {
-    const q = query(collection(db, "posts"), orderBy("created", "desc"));
+    const q = query(collection(db, "posts"), orderBy("created"));
     const unsubscribe = onSnapshot(
       q, 
       (snapshot) => {
         let posts = snapshot.docs.map(doc => ({
           ...doc.data()
         }))
-        dispatch(setAllPosts(posts))
+        searchbar ? dispatch(setAllPosts(posts.filter(post => post.content.includes(searchbar)))) : dispatch(setAllPosts(posts))
       },
       (error) => {
         console.error(error)
       });
     return unsubscribe
     // eslint-disable-next-line
-  }, [])
+  }, [searchbar])
   return (
     <div id="section--two">
       <form className="search--bar">
         <button><i className="fa-solid fa-magnifying-glass understated"></i></button>
-        <input type="text" placeholder="Search" ref={searchBarRef}></input>
+        <input type="text" placeholder="Search" ref={searchBarRef} onChange={handleSearchbarChange} value={searchbar}></input>
       </form>
       <div className="section">
         <form className="post--form">
