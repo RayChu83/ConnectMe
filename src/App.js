@@ -8,9 +8,10 @@ import LoggedInProtectedLayout from './Layouts/LoggedInProtectedLayout';
 import LoggedOutProtectedLayout from './Layouts/LoggedOutProtectedLayout';
 import Home from './Components/Home';
 import Login from './Components/Login';
+import About from './Components/About';
 import Register from './Components/Register';
-import './App.css';
 import UserLayout from './Layouts/UserLayout';
+import './App.css';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route element={<LoggedInProtectedLayout />}>
                 <Route index element={<Home />}/>
               </Route>
+              <Route path='about' element={<About />}/>
             </Route>
             <Route element={<LoggedOutProtectedLayout />}>
               <Route path='login' element={<Login />}/>

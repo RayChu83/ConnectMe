@@ -11,6 +11,9 @@ nav{
 .nav--bars{
   font-size: 1.3em;
   cursor: pointer;
+  position: absolute;
+  top: 33px;
+  right: 20px;
 }
 nav img{
   height: 80px;
@@ -27,7 +30,17 @@ nav ul{
 nav li{
   cursor: pointer;
 }
+.active{
+  padding: 5px 7px;
+  background: rgba(255, 255, 255, 0.204);
+}
 @media (max-width: 750px) {
+  nav{
+    flex-direction: column;
+  }
+  #nav--logo{
+    align-self: flex-start;
+  }
   nav ul{
     display: none;
   }
@@ -37,5 +50,10 @@ nav li{
   .post--details{
       align-items: flex-start;
       flex-direction: column;
+  }
+}
+@media (max-width: 320px){
+  nav ul{
+    flex-direction: column;
   }
 }

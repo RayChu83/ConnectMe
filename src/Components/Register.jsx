@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 
 import Google from "../Images/googleLogo.png"
-import { auth, provider } from '../Firebase/firebase'
+import { auth, db, provider } from '../Firebase/firebase'
+import { doc, setDoc } from 'firebase/firestore'
 
 export default function Register() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -20,14 +21,35 @@ export default function Register() {
     e.preventDefault()
     const {email, password} = formData
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => console.log("User signed up!"))
+      .then(async (userCredential) => {
+        const userId = userCredential.user.uid
+        const email = userCredential.user.email
+        await setDoc(doc(db, "users", userId), {
+          username : formData.username,
+          description : "",
+          userId : userId,
+          email : email,
+          followers : [],
+          following : [],
+        })
+      })
       .catch(err => setError(err.message))
   }
   const googleRegister = () => {
     signInWithPopup(auth, provider)
-      .then(res => 
-        console.log("success")
-      )
+      .then(async (userCredential) => {
+        const userId = userCredential.user.uid
+        const email = userCredential.user.email
+        const username = userCredential.user.displayName
+        await setDoc(doc(db, "users", userId), {
+          username : username.substring(0, 20),
+          description : "",
+          userId : userId,
+          email : email,
+          followers : [],
+          following : [],
+        })
+      })
       .catch(err => setError(err.message))
   }
   return (

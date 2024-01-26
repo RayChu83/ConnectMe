@@ -65,7 +65,7 @@ export default function HomeSectionTwo() {
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
           <img className="profile--img" src="https://th.bing.com/th/id/R.03e726787c9f981a4954f521a80424af?rik=Ceuu5CZ8AH5Msw&riu=http%3a%2f%2fcreativeartsworkshop.org%2fwp-content%2fuploads%2f2020%2f02%2fblank-profile-picture-973460_960_720-300x300-1-300x300.png&ehk=J%2bDw294HSHRvhlyrl6fvIPVYRvi7ZoffP0BxPNVmtgw%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" alt="" height="40" width="40"></img>
-          <input type="text" placeholder="Say Hello!" value={newPostContent} onChange={handleNewPostContentChange}></input>
+          <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
           <button type="submit" className="cta">Post</button>
         </form>
           {allPosts ? allPosts.map((post, index) => (

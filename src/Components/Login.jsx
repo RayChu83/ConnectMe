@@ -20,7 +20,9 @@ export default function Login() {
     e.preventDefault()
     const {email, password} = formData
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => console.log("User Logged in!"))
+      .then(() => {
+        console.log("logged in")
+      })
       .catch(err => setError(err.message))
   }
   const googleLogin = () => {
