@@ -3,14 +3,15 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import store from './Redux/store';
+import UserLayout from './Layouts/UserLayout';
 import AppLayout from './Layouts/AppLayout';
 import LoggedInProtectedLayout from './Layouts/LoggedInProtectedLayout';
 import LoggedOutProtectedLayout from './Layouts/LoggedOutProtectedLayout';
 import Home from './Components/Home';
-import Login from './Components/Login';
 import About from './Components/About';
+import Profile from './Components/Profile';
+import Login from './Components/Login';
 import Register from './Components/Register';
-import UserLayout from './Layouts/UserLayout';
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<AppLayout />}>
               <Route element={<LoggedInProtectedLayout />}>
                 <Route index element={<Home />}/>
+                <Route path='profile' element={<Profile/>}/>
               </Route>
               <Route path='about' element={<About />}/>
             </Route>

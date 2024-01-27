@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 
 import Google from "../Images/googleLogo.png"
 import { auth, db, provider } from '../Firebase/firebase'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 export default function Register() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -38,17 +38,22 @@ export default function Register() {
   const googleRegister = () => {
     signInWithPopup(auth, provider)
       .then(async (userCredential) => {
+        // checks for user, if not create a user document in db
         const userId = userCredential.user.uid
-        const email = userCredential.user.email
-        const username = userCredential.user.displayName
-        await setDoc(doc(db, "users", userId), {
-          username : username.substring(0, 20),
-          description : "",
-          userId : userId,
-          email : email,
-          followers : [],
-          following : [],
-        })
+        const docRef = doc(db, "users", userId);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()){
+          const email = userCredential.user.email
+          const username = userCredential.user.displayName
+          await setDoc(doc(db, "users", userId), {
+            username : username.substring(0, 20),
+            description : "",
+            userId : userId,
+            email : email,
+            followers : [],
+            following : [],
+          })
+        }
       })
       .catch(err => setError(err.message))
   }

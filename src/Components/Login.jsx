@@ -4,7 +4,7 @@ import { auth, db, provider } from '../Firebase/firebase'
 
 import Google from "../Images/googleLogo.png"
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 export default function Login() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -31,18 +31,21 @@ export default function Login() {
       .then(async (userCredential) => {
         // checks for user, if not create a user document in db
         const userId = userCredential.user.uid
-        const email = userCredential.user.email
-        const username = userCredential.user.displayName
-        await setDoc(doc(db, "users", userId), {
-          username : username.substring(0, 20),
-          description : "",
-          userId : userId,
-          email : email,
-          followers : [],
-          following : [],
-        })
-      }
-      )
+        const docRef = doc(db, "users", userId);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()){
+          const email = userCredential.user.email
+          const username = userCredential.user.displayName
+          await setDoc(doc(db, "users", userId), {
+            username : username.substring(0, 20),
+            description : "",
+            userId : userId,
+            email : email,
+            followers : [],
+            following : [],
+          })
+        }
+      })
       .catch(err => setError(err.message))
   }
   return (

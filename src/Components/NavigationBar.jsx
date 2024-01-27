@@ -14,14 +14,7 @@ export default function NavigationBar() {
   const toggleSearchbarFocus = () => {
     dispatch(setSearchbarFocused())
   }
-  function signUserOut() {
-    console.log("I was ran")
-    signOut(auth).then(() => {
-      console.log("success")
-    }).catch((error) => {
-      console.error(error)
-    });
-  } 
+
   const toggleNavDropdown = () => {
     setNavDropdown(prevState => !prevState)
   }
@@ -35,7 +28,7 @@ export default function NavigationBar() {
         <li><NavLink to="/"><i className="fa-solid fa-house"></i></NavLink></li>
         <li><NavLink to="/about"><i className="fa-solid fa-circle-info"></i></NavLink></li>
         <li onClick={toggleSearchbarFocus}><Link to="/"><i className="fa-solid fa-magnifying-glass"></i></Link></li>
-        <li onClick={() => signUserOut()}><i className="fa-solid fa-user"></i></li>
+        <li><NavLink to="/profile"><i className="fa-solid fa-user"></i></NavLink></li>
       </ul>
     </nav>
   )
