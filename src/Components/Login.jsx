@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
-import { auth, provider } from '../Firebase/firebase'
+import { auth, db, provider } from '../Firebase/firebase'
 
 import Google from "../Images/googleLogo.png"
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 
 export default function Login() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -27,8 +28,20 @@ export default function Login() {
   }
   const googleLogin = () => {
     signInWithPopup(auth, provider)
-      .then(res => 
-        console.log("success")
+      .then(async (userCredential) => {
+        // checks for user, if not create a user document in db
+        const userId = userCredential.user.uid
+        const email = userCredential.user.email
+        const username = userCredential.user.displayName
+        await setDoc(doc(db, "users", userId), {
+          username : username.substring(0, 20),
+          description : "",
+          userId : userId,
+          email : email,
+          followers : [],
+          following : [],
+        })
+      }
       )
       .catch(err => setError(err.message))
   }
