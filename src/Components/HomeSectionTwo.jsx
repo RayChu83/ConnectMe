@@ -9,6 +9,7 @@ import Post from './Post';
 export default function HomeSectionTwo() {
   const searchBarRef = useRef(null);
   const [searchbar, setSearchbar] = useState("")
+  const [displayedPosts, setDisplayedPosts] = useState(null)
   const [newPostContent, setNewPostContent] = useState("")
   const dispatch = useDispatch()
   const allPosts = useSelector(state => state.allPosts)
@@ -20,7 +21,6 @@ export default function HomeSectionTwo() {
   const handleNewPostContentChange = (e) => {
     setNewPostContent(e.target.value)
   }
-  console.log(newPostContent)
   useEffect(() => {
     // sort of like a event listener, where redux state determines if search bar is focused or not
     if (isSearchbarFocused) {
@@ -31,21 +31,31 @@ export default function HomeSectionTwo() {
   }, [isSearchbarFocused]);
 
   useEffect(() => {
+    // all posts changes listener
     const q = query(collection(db, "posts"), orderBy("created", "desc"));
-    const unsubscribe = onSnapshot(
-      q, 
-      (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
         let posts = snapshot.docs.map(doc => ({
           ...doc.data()
         }))
-        searchbar ? dispatch(setAllPosts(posts.filter(post => post.content.includes(searchbar)))) : dispatch(setAllPosts(posts))
+        dispatch(setAllPosts(posts))
       },
       (error) => {
         console.error(error)
       });
     return unsubscribe
     // eslint-disable-next-line
-  }, [searchbar])
+  }, [])
+
+  useEffect(() => {
+    // conditional statements that determine how the posts should be displayed, whenever new search result or when allPosts from firebase changes
+    if (allPosts && searchbar) {
+      setDisplayedPosts(allPosts.filter(post => post.content.includes(searchbar)))
+    }else if (allPosts){
+      // no search result? display all posts
+      setDisplayedPosts(allPosts)
+    }
+    // eslint-disable-next-line
+  }, [searchbar, allPosts])
 
   const handleNewPost = async (e) => {
     e.preventDefault()
@@ -68,7 +78,7 @@ export default function HomeSectionTwo() {
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
           <button type="submit" className="cta">Post</button>
         </form>
-          {allPosts ? allPosts.map((post, index) => (
+          {displayedPosts ? displayedPosts.map((post, index) => (
             <Post username={post.username} content={post.content} created={post.created} key={index}/>
           )) : <p className='understated text--center'>Loading...</p>}
       </div>
