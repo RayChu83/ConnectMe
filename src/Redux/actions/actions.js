@@ -1,4 +1,4 @@
-import { LOGGED_IN_FALSE, LOGGED_IN_TRUE, 
+import { ADD_LOGGED_IN_UID, CLEAR_LOGGED_IN_UID, LOGGED_IN_FALSE, LOGGED_IN_TRUE, 
     TOGGLE_OFF_SEARCHBAR_FOCUS, TOGGLE_ON_SEARCHBAR_FOCUS, 
     UPDATE_ALL_POSTS } from "../constants/actionNames";
 
@@ -26,5 +26,17 @@ export const setLoggedInTrue = () => {
 export const setLoggedInFalse = () => {
     return {
         type : LOGGED_IN_FALSE
+    }
+}
+export const setLoggedInUid = (payload) => {
+    return {
+        type : ADD_LOGGED_IN_UID,
+        payload : payload
+    }
+}
+
+export const setLoggedInUidCleared = () => {
+    return {
+        type : CLEAR_LOGGED_IN_UID
     }
 }

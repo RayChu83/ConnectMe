@@ -1,6 +1,6 @@
 import { UPDATE_ALL_POSTS } from "../constants/actionNames";
 
-export const postsReducer = (state = null, action) => {
+const postsReducer = (state = null, action) => {
     switch(action.type) {
         case UPDATE_ALL_POSTS:
             return [
@@ -11,3 +11,4 @@ export const postsReducer = (state = null, action) => {
             return state
     }
 }
+export default postsReducer

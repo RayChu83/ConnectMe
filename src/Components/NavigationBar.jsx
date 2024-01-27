@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { signOut } from "firebase/auth";
 
 import "../styles/nav.css"
 import navLogo from "../Images/ConnectMe.png"
 import { setSearchbarFocused } from '../Redux/actions/actions'
 import { useDispatch } from 'react-redux'
-import { auth } from '../Firebase/firebase';
 
 export default function NavigationBar() {
   const [navDropdown, setNavDropdown] = useState(false)
@@ -18,6 +16,9 @@ export default function NavigationBar() {
   const toggleNavDropdown = () => {
     setNavDropdown(prevState => !prevState)
   }
+  const hideDropdown = () => {
+    setNavDropdown(false)
+  }
   return (
     <nav>
       <Link to="/" id='nav--logo'>
@@ -25,10 +26,10 @@ export default function NavigationBar() {
       </Link>
       <i className="fa-solid fa-bars nav--bars" style={{display: "none"}} onClick={toggleNavDropdown}></i>
       <ul style={navDropdown ? {display: "flex"} : null}>
-        <li><NavLink to="/"><i className="fa-solid fa-house"></i></NavLink></li>
-        <li><NavLink to="/about"><i className="fa-solid fa-circle-info"></i></NavLink></li>
-        <li onClick={toggleSearchbarFocus}><Link to="/"><i className="fa-solid fa-magnifying-glass"></i></Link></li>
-        <li><NavLink to="/profile"><i className="fa-solid fa-user"></i></NavLink></li>
+        <li onClick={hideDropdown}><NavLink to="/"><i className="fa-solid fa-house"></i></NavLink></li>
+        <li onClick={hideDropdown}><NavLink to="/about"><i className="fa-solid fa-circle-info"></i></NavLink></li>
+        <li onClick={() => {toggleSearchbarFocus(); hideDropdown()}}><Link to="/"><i className="fa-solid fa-magnifying-glass"></i></Link></li>
+        <li onClick={hideDropdown}><NavLink to="/profile"><i className="fa-solid fa-user"></i></NavLink></li>
       </ul>
     </nav>
   )

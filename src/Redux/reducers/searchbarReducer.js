@@ -1,6 +1,6 @@
 import { TOGGLE_OFF_SEARCHBAR_FOCUS, TOGGLE_ON_SEARCHBAR_FOCUS } from "../constants/actionNames";
 
-export const searchbarFocusReducer = (state = false, action) => {
+const searchbarFocusReducer = (state = false, action) => {
     switch (action.type) {
         case TOGGLE_ON_SEARCHBAR_FOCUS:
             return true
@@ -10,3 +10,4 @@ export const searchbarFocusReducer = (state = false, action) => {
             return state
     }
 }
+export default searchbarFocusReducer
