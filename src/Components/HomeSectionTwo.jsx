@@ -5,19 +5,26 @@ import { collection, onSnapshot, query, orderBy, addDoc } from "firebase/firesto
 import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
 import Post from './Post';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function HomeSectionTwo() {
+
   const searchBarRef = useRef(null);
-  const [searchbar, setSearchbar] = useState("")
+  const isSearchbarFocused = useSelector(state => state.searchbarFocus)
+  const [searchParams] = useSearchParams();
+  const [searchbar, setSearchbar] = useState(searchParams.get("search") || "")
+
   const [displayedPosts, setDisplayedPosts] = useState(null)
   const [newPostContent, setNewPostContent] = useState("")
   const dispatch = useDispatch()
   const allPosts = useSelector(state => state.allPosts)
-  const isSearchbarFocused = useSelector(state => state.searchbarFocus)
+
+  const navigate = useNavigate()
 
   const handleSearchbarChange = (e) => {
     setSearchbar(e.target.value)
   }
+
   const handleNewPostContentChange = (e) => {
     setNewPostContent(e.target.value)
   }
@@ -66,10 +73,15 @@ export default function HomeSectionTwo() {
     })
     setNewPostContent("")
   }
+  const handleSearch = (e) => {
+    // typically it should filter all posts, if user clicks on search icon, we want to set a search param called ?search and use that by default
+    e.preventDefault()
+    navigate({search: `?${createSearchParams({search: searchbar})}`})
+  }
   return (
     <div id="section--two">
       <form className="search--bar">
-        <button><i className="fa-solid fa-magnifying-glass understated"></i></button>
+        <button onClick={handleSearch}><i className="fa-solid fa-magnifying-glass understated"></i></button>
         <input type="text" placeholder="Search" ref={searchBarRef} onChange={handleSearchbarChange} value={searchbar}></input>
       </form>
       <div className="section">
