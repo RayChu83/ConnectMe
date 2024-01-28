@@ -88,12 +88,15 @@ main .section:hover, .search--bar:hover{
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 .user--details{
   display: flex;
   align-items: center ;
   gap: 10px;
   cursor: pointer;
+  width: fit-content;
+  flex-wrap: wrap;
 }
 .user--details h1, .user--details h3{
   max-width: 200px;

@@ -21,7 +21,7 @@ export default function HomeSectionThree() {
             loggedInUsersPost.map((post, index) => <Post userInfo={post.userInfo} content={post.content} created={post.created} key={index} />) 
           : 
             // default value has a empty array, if fetched and still empty, state changes to null
-            loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts found...</p>
+            loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
         }
       </article>
       <Link to="/profile">

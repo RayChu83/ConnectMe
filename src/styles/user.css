@@ -1,4 +1,10 @@
+#user{
+    background-color: #16161e;
+    border-radius: 20px;
+    padding: 40px 25px 25px 25px;
+}
 .user--following--followers{
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
 }

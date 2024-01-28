@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { collection, onSnapshot, query, orderBy, addDoc, where, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, addDoc, } from "firebase/firestore";
 
-import { setAllPosts, setLoggedInUsersPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
+import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
 import Post from './Post';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
