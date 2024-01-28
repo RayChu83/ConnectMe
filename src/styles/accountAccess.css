@@ -14,13 +14,13 @@
     font-weight: 900;
     font-size: 2em;
 }
-.account--access--forms{
+.account--access--forms, #profile--edit--form{
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin-bottom: 5px;
 }
-.account--access--forms input{
+.account--access--forms input, #profile--edit--form input{
     background-color: #292b3d;
     padding: 12px;
     border-radius: 12px;

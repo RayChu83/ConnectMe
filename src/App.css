@@ -64,3 +64,9 @@ body{
 .understated{
   color: gray;
 }
+.visible{
+  display: block !important;
+}
+.blurred{
+  filter: blur(4px);
+}
