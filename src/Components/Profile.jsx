@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../Firebase/firebase'
 import { useSelector } from 'react-redux'
@@ -9,13 +9,14 @@ import "../styles/user.css"
 export default function Profile() {
   const loggedInUser = useSelector(state => state.loggedInUser)
   const [isProfilePopUpVisible, setIsProfilePopUpVisible] = useState(false)
+  const [profilePopUpData, setProfilePopUpData] = useState({username : "", email : "", description: ""})
+  console.log(profilePopUpData)
   const [isShowingAll, setIsShowingAll] = useState(false)
   const loggedInUsersPost = useSelector(state => (isShowingAll ? state.loggedInUsersPost : state.loggedInUsersPost?.slice(0, 2)));
 
   const toggleShowAllPosts = () => {
     setIsShowingAll(prevState => !prevState)
   }
-
   function signUserOut(){
     signOut(auth)
       .catch(err => console.error(err))
@@ -23,27 +24,35 @@ export default function Profile() {
   const editProfile = () => {
     setIsProfilePopUpVisible(prevState => !prevState)
   }
-
+  function handleChange(e) {
+    const {name, value} = e.target
+    setProfilePopUpData(prevState => ({...prevState, [name] : value}))
+  }
+  useEffect(() => {
+    if (loggedInUser.username || loggedInUser.email || loggedInUser.description) {
+      setProfilePopUpData({username : loggedInUser.username, email : loggedInUser.email, description: loggedInUser.description})
+    }
+  }, [loggedInUser])
   return (
     <>
-      <section id='user--edit' className={isProfilePopUpVisible && "visible"}>
+      <section id='user--edit' className={isProfilePopUpVisible ? "visible" : ""}>
         <article className='user--edit--heading'>
           <h2>Edit Profile</h2>
-          <p onClick={editProfile}><i class="fa-solid fa-xmark danger--text pointer"></i></p>
+          <p onClick={editProfile}><i className="fa-solid fa-xmark danger--text pointer"></i></p>
         </article>
         <form id='profile--edit--form'>
           <label htmlFor="edit--username">Username:</label>
-          <input type="text" id='edit--username' value={loggedInUser?.username}/>
+          <input type="text" id='edit--username' value={profilePopUpData?.username} name='username' onChange={handleChange}/>
           <label htmlFor="edit--email">Email:</label>
-          <input type="text" id='edit--email' value={loggedInUser?.email} readOnly className='understated'/>
+          <input type="text" id='edit--email' value={profilePopUpData?.email} readOnly className='understated' name='email' onChange={handleChange}/>
           <label htmlFor="edit--description">Description:</label>
-          <input type="text" id='edit--description' value={loggedInUser?.description}/>
+          <input type="text" id='edit--description' value={profilePopUpData?.description} name='description' onChange={handleChange}/>
           <label htmlFor="edit--pfp">Profile Picture:</label>
           <input type="file" id='edit--pfp'/>
           <button className='cta'>Save Changes</button>
         </form>
       </section>
-      <main id='user' className={isProfilePopUpVisible && "blurred"}>
+      <main id='user' className={isProfilePopUpVisible ? "blurred" : ""}>
         {loggedInUser ? 
           <>
             <div className="user--details">
