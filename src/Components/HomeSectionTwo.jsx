@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { collection, onSnapshot, query, orderBy, addDoc } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, addDoc, getDoc, doc } from "firebase/firestore";
 
 import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
@@ -8,7 +8,7 @@ import Post from './Post';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function HomeSectionTwo() {
-
+  const loggedInUser = useSelector(state => state.loggedInUser)
   const searchBarRef = useRef(null);
   const isSearchbarFocused = useSelector(state => state.searchbarFocus)
   const [searchParams] = useSearchParams();
@@ -69,7 +69,7 @@ export default function HomeSectionTwo() {
     await addDoc(collection(db, "posts"), {
       content : newPostContent,
       created : new Date(),
-      username : "Ray C"
+      userInfo : loggedInUser
     })
     setNewPostContent("")
   }
@@ -91,7 +91,7 @@ export default function HomeSectionTwo() {
           <button type="submit" className="cta">Post</button>
         </form>
           {displayedPosts ? displayedPosts.map((post, index) => (
-            <Post username={post.username} content={post.content} created={post.created} key={index}/>
+            <Post userInfo={post.userInfo} content={post.content} created={post.created} key={index}/>
           )) : <p className='understated text--center'>Loading...</p>}
       </div>
     </div>

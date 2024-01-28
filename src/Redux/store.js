@@ -6,7 +6,7 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActionPaths: ['payload.0.created'],
+        ignoredActionPaths: ['payload.0.created', 'payload.1.created', 'allPosts.0'],
       },
     })
 })

@@ -1,6 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import Post from './Post'
 
 export default function HomeSectionThree() {
+  const loggedInUsersPost = useSelector(state => state.loggedInUsersPost)
   return (
     <aside id="section--three" className="section">
       <section id="profile">
@@ -9,28 +12,7 @@ export default function HomeSectionThree() {
       </section>
       <article>
         <h3 className="heading">Your recent activity...</h3>
-        <article className="post">
-          <div className="post--details">
-            <div className="user--details">
-              <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" height="40" width="40"></img>
-              <h3>You</h3>
-            </div>
-          </div>
-          <section className="post-content">
-            <small>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, voluptas aspernatur obcaecati porro sunt libero excepturi quibusdam fugiat amet numquam non, praesentium iste vero eveniet?</small>
-          </section>
-        </article>
-        <article className="post">
-          <div className="post--details">
-            <div className="user--details">
-              <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" height="40" width="40"></img>
-              <h3>You</h3>
-            </div>
-          </div>
-          <section className="post-content">
-            <small>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, voluptas aspernatur obcaecati porro sunt libero excepturi quibusdam fugiat amet numquam non, praesentium iste vero eveniet?</small>
-          </section>
-        </article>
+        {loggedInUsersPost?.length ? loggedInUsersPost.map((post, index) => <Post userInfo={post.userInfo} content={post.content} created={post.created} key={index} />) : <p className='understated text--center'>Loading...</p>}
       </article>
       <button className="cta expand">View All</button>
     </aside>

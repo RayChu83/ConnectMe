@@ -18,7 +18,7 @@ body{
   background-color: #1d1268;
   border: none;
   font-weight: 700;
-  padding: 12px;
+  padding: 10px 12px;
   border-radius: 12px;
   cursor: pointer;
 }
@@ -41,4 +41,23 @@ body{
 }
 .danger--text{
   color: rgb(149, 52, 52);
+}
+.danger--btn{
+  background: rgb(149, 52, 52);
+  border: none;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+}
+.underline{
+  text-decoration: underline;
+}
+.overstated{
+  color: white;
+  font-weight: 800;
+}
+.understated{
+  color: gray;
 }

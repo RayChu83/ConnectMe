@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react'
 import { useDispatch } from 'react-redux';
-import { auth } from '../Firebase/firebase';
+import { auth, db } from '../Firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Outlet } from 'react-router-dom';
 
-import { setLoggedInTrue, setLoggedInFalse, setLoggedInUid, setLoggedInUidCleared } from '../Redux/actions/actions';
+import { setLoggedInTrue, setLoggedInFalse, setLoggedInUser, setLoggedInUserCleared, setLoggedInUsersPosts, setLoggedInUsersPostsCleared } from '../Redux/actions/actions';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 
 export default function UserLayout() {
   const dispatch = useDispatch()
@@ -12,10 +13,27 @@ export default function UserLayout() {
       return onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setLoggedInTrue())
-        dispatch(setLoggedInUid(user.uid))
+        async function fetchLoggedInUser() {
+          const docRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(docRef);
+          dispatch(setLoggedInUser(docSnap.data()))
+        }
+        const fetchLoggedInUsersPosts = async (userId) => {
+          const allUsersPosts = []
+          const docRef = collection(db, "posts");
+          const q = query(docRef, where("userInfo.userId", "==", userId))
+          const querySnapshot = await getDocs(q)
+          querySnapshot.forEach((doc) => {
+            allUsersPosts.push(doc.data())
+          });
+          dispatch(setLoggedInUsersPosts(allUsersPosts))
+        }
+        fetchLoggedInUser()
+        fetchLoggedInUsersPosts(user.uid)
       } else {
         dispatch(setLoggedInFalse())
-        dispatch(setLoggedInUidCleared())
+        dispatch(setLoggedInUserCleared())
+        dispatch(setLoggedInUsersPostsCleared())
       }
       });
       // eslint-disable-next-line

@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { signOut } from 'firebase/auth'
-import { auth, db } from '../Firebase/firebase'
+import { auth } from '../Firebase/firebase'
 import { useSelector } from 'react-redux'
-import { doc, getDoc } from 'firebase/firestore'
+
+import "../styles/user.css"
 
 export default function Profile() {
-  const loggedInId = useSelector(state => state.loggedInId)
-  const [loggedInUser, setLoggedInUser] = useState(null)
+  const loggedInUser = useSelector(state => state.loggedInUser)
+  // const loggedInUsersPost = useSelector(state => state.loggedInUsersPost)
 
   function signUserOut(){
     signOut(auth)
       .catch(err => console.error(err))
   }
-  useEffect(() => {
-    async function fetchData() {
-      const docRef = doc(db, "users", loggedInId);
-      const docSnap = await getDoc(docRef);
-      setLoggedInUser(docSnap.data())
-    }
-    // only fetch for users information when we have the logged in users id
-    loggedInId && fetchData()
-  }, [loggedInId])
+
   return (
     <>
       {loggedInUser ? 
         <>
-          <h1>Hey, {loggedInUser.username}</h1>
-          <button onClick={signUserOut}>Logout</button>
+          <div className="user--details" title={loggedInUser.username || "Anonymous"}>
+            <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" alt="" height="40" width="40"></img>
+            <h1 className='overstated'>{loggedInUser.username || "Anonymous"}</h1>
+          </div>
+          <p className='user--following--followers'><span className='heading underline pointer'>{loggedInUser.following.length} Following</span><span className='heading underline pointer'>{loggedInUser.followers.length} Followers</span></p>
+          <button onClick={signUserOut} className='danger--btn'>Logout</button>
         </>
        : <p className='understated text--center'>Loading...</p>}
     </>
