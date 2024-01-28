@@ -1,6 +1,4 @@
-import { doc, getDoc } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
-import { db } from '../Firebase/firebase'
+import React from 'react'
 
 export default function Post(props) {
   const convertDate = (timestamp) => {
@@ -12,7 +10,7 @@ export default function Post(props) {
       <div className="post--details">
       <div className="user--details">
         <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" height="40" width="40"></img>
-        <h3>@ {props.userInfo.username}</h3>
+        <h3>{props.userInfo.username}</h3>
         </div>
           <small className="understated">
             {convertDate(props.created)}

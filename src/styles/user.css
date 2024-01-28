@@ -1,5 +1,4 @@
 .user--following--followers{
     display: flex;
     gap: 12px;
-    margin: 0;
 }

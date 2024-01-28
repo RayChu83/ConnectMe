@@ -86,17 +86,20 @@ main .section:hover, .search--bar:hover{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 .user--details{
   display: flex;
   align-items: center ;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
 }
 .user--details h1, .user--details h3{
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 0;
 }
 
 /* SECTION THREE STYLES */

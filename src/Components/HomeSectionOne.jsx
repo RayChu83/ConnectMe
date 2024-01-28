@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function HomeSectionOne() {
   return (
@@ -16,7 +17,9 @@ export default function HomeSectionOne() {
         <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" height="40" width="40"></img>
         <p className="username">@Anonymous</p>
       </section>
-      <button className="cta expand">See All</button>
+      <Link to="/profile">
+        <button className="cta expand">See All</button> 
+      </Link>
     </aside>
   )
 }
