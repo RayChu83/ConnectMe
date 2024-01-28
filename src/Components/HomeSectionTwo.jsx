@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { collection, onSnapshot, query, orderBy, addDoc, getDoc, doc } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, addDoc, where, getDocs } from "firebase/firestore";
 
-import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
+import { setAllPosts, setLoggedInUsersPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
 import Post from './Post';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import fetchLoggedInUsersPosts from '../fetchLoggedInUsersPosts';
 
 export default function HomeSectionTwo() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -71,6 +72,8 @@ export default function HomeSectionTwo() {
       created : new Date(),
       userInfo : loggedInUser
     })
+    // update sidebar containing your most recent activity when creating a new post
+    fetchLoggedInUsersPosts(loggedInUser.userId, dispatch)
     setNewPostContent("")
   }
   const handleSearch = (e) => {
