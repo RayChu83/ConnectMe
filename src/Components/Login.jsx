@@ -43,6 +43,7 @@ export default function Login() {
             email : email,
             followers : [],
             following : [],
+            pfp : ""
           })
         }
       })
