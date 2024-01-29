@@ -6,7 +6,7 @@ import Post from './Post'
 
 import "../styles/user.css"
 import { auth, db, storage } from '../Firebase/firebase'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 
 export default function Profile() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -14,6 +14,8 @@ export default function Profile() {
   const [profilePopUpData, setProfilePopUpData] = useState({username : "", email : "", description: ""})
   const [imageUpload, setImageUpload] = useState(undefined)
   const [isShowingAll, setIsShowingAll] = useState(false)
+  const allLoggedInUsersPosts = useSelector(state => state?.loggedInUsersPost)
+  console.log(allLoggedInUsersPosts)
   const loggedInUsersPost = useSelector(state => (isShowingAll ? state.loggedInUsersPost : state.loggedInUsersPost?.slice(0, 2)));
   const toggleShowAllPosts = () => {
     setIsShowingAll(prevState => !prevState)
@@ -44,11 +46,10 @@ export default function Profile() {
         listAll(ref(storage, "profilePictures"))
           .then((res) => {
             const userPfpReference = res.items.filter(reference => reference.name === loggedInUser.userId)
-            console.log(userPfpReference)
-            getDownloadURL(userPfpReference[0]).then(url => {
-              updateDoc(doc(db, "users", loggedInUser.userId), {
+            getDownloadURL(userPfpReference[0]).then(async (url) => {
+              await updateDoc(doc(db, "users", loggedInUser.userId), {
                 ...loggedInUser, ...profilePopUpData, pfp : url
-              }).then(() => {window.location.reload()})
+              })
             })
           }
         )
@@ -56,9 +57,18 @@ export default function Profile() {
     }else{
       await updateDoc(doc(db, "users", loggedInUser.userId), {
         ...loggedInUser, ...profilePopUpData
-      }).then(() => {window.location.reload()})
-    }
-  }
+    })
+    // update all users posts with the updated profile change
+    
+    getDoc(doc(db, "users", loggedInUser.userId)).then(res => {
+      Promise.all(
+      allLoggedInUsersPosts.map(async (post) => {
+        await updateDoc(doc(db, "posts", post.id), {
+            ...post, userInfo : {...res.data()}
+          })
+        })).then(() => window.location.reload())
+      })
+  }}
   useEffect(() => {
     if (loggedInUser?.username || loggedInUser?.email || loggedInUser?.description) {
       setProfilePopUpData({username : loggedInUser.username, email : loggedInUser.email, description: loggedInUser.description})

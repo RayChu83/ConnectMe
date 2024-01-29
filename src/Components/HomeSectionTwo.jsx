@@ -7,6 +7,7 @@ import { db } from '../Firebase/firebase';
 import Post from './Post';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import fetchLoggedInUsersPosts from '../fetchLoggedInUsersPosts';
+import { v4 } from 'uuid';
 
 export default function HomeSectionTwo() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -70,6 +71,7 @@ export default function HomeSectionTwo() {
     await addDoc(collection(db, "posts"), {
       content : newPostContent,
       created : new Date(),
+      id : v4(),
       userInfo : loggedInUser
     })
     // update sidebar containing your most recent activity when creating a new post

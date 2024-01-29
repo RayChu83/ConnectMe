@@ -5,7 +5,6 @@ export default function Post(props) {
     let dateObject = timestamp.toDate()
     return `${dateObject.getMonth() + 1} / ${dateObject.getDate()} / ${dateObject.getFullYear()}`
   }
-  console.log(props.userInfo)
   return (
     <article className="post">
       <div className="post--details">
