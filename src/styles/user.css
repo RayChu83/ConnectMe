@@ -8,6 +8,7 @@
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    margin-top: 0;
 }
 #user--edit{
     display: none;

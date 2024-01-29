@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
-import { auth } from '../Firebase/firebase'
+import { auth, db } from '../Firebase/firebase'
 import { useSelector } from 'react-redux'
 import Post from './Post'
 
 import "../styles/user.css"
+import { doc, updateDoc } from 'firebase/firestore'
 
 export default function Profile() {
   const loggedInUser = useSelector(state => state.loggedInUser)
   const [isProfilePopUpVisible, setIsProfilePopUpVisible] = useState(false)
   const [profilePopUpData, setProfilePopUpData] = useState({username : "", email : "", description: ""})
-  console.log(profilePopUpData)
   const [isShowingAll, setIsShowingAll] = useState(false)
   const loggedInUsersPost = useSelector(state => (isShowingAll ? state.loggedInUsersPost : state.loggedInUsersPost?.slice(0, 2)));
 
@@ -28,6 +28,13 @@ export default function Profile() {
     const {name, value} = e.target
     setProfilePopUpData(prevState => ({...prevState, [name] : value}))
   }
+  async function handleSubmit(e) {
+    e.preventDefault()
+    await updateDoc(doc(db, "users", loggedInUser.userId), {
+      ...loggedInUser, ...profilePopUpData
+    })
+    window.location.reload();
+  }
   useEffect(() => {
     if (loggedInUser.username || loggedInUser.email || loggedInUser.description) {
       setProfilePopUpData({username : loggedInUser.username, email : loggedInUser.email, description: loggedInUser.description})
@@ -40,15 +47,15 @@ export default function Profile() {
           <h2>Edit Profile</h2>
           <p onClick={editProfile}><i className="fa-solid fa-xmark danger--text pointer"></i></p>
         </article>
-        <form id='profile--edit--form'>
+        <form id='profile--edit--form' onSubmit={handleSubmit}>
           <label htmlFor="edit--username">Username:</label>
-          <input type="text" id='edit--username' value={profilePopUpData?.username} name='username' onChange={handleChange}/>
+          <input type="text" id='edit--username' value={profilePopUpData?.username} name='username' onChange={handleChange} maxLength="20"/>
           <label htmlFor="edit--email">Email:</label>
           <input type="text" id='edit--email' value={profilePopUpData?.email} readOnly className='understated' name='email' onChange={handleChange}/>
           <label htmlFor="edit--description">Description:</label>
-          <input type="text" id='edit--description' value={profilePopUpData?.description} name='description' onChange={handleChange}/>
+          <input type="text" id='edit--description' value={profilePopUpData?.description} name='description' onChange={handleChange} maxLength="250"/>
           <label htmlFor="edit--pfp">Profile Picture:</label>
-          <input type="file" id='edit--pfp'/>
+          <input type="file" id='edit--pfp' className='pointer'/>
           <button className='cta'>Save Changes</button>
         </form>
       </section>
@@ -60,6 +67,7 @@ export default function Profile() {
               <h1 className='overstated'>{loggedInUser.username || "Anonymous"}</h1>
               <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>
             </div>
+            <p>{loggedInUser.description || "No description found..."}</p>
             <p className='user--following--followers'><span className='heading underline pointer'>{loggedInUser.following.length} Following</span><span className='heading underline pointer'>{loggedInUser.followers.length} Followers</span></p>
             {loggedInUsersPost?.length 
             ? 
