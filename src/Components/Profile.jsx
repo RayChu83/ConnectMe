@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage"
+import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from "firebase/storage"
 import { useSelector } from 'react-redux'
 import Post from './Post'
 
@@ -29,7 +29,6 @@ export default function Profile() {
     const {name, value} = e.target
     setProfilePopUpData(prevState => ({...prevState, [name] : value}))
   }
-  console.log(imageUpload)
   function handleProfilePictureChange(e) {
     setImageUpload(e.target.files[0])
   }
@@ -37,10 +36,16 @@ export default function Profile() {
     e.preventDefault()
     if (imageUpload !== undefined) {
       const imageRef = ref(storage, `profilePictures/${loggedInUser.userId}`)
-      uploadBytes(imageRef, imageUpload).then(() => {
+      // check for if user has a previous profile picture, if so remove it and we set a new one with the new imageUpload
+      if (loggedInUser.pfp) {
+        await deleteObject(imageRef)
+      }
+      await uploadBytes(imageRef, imageUpload).then(() => {
         listAll(ref(storage, "profilePictures"))
           .then((res) => {
-            getDownloadURL(res.items[0]).then(url => {
+            const userPfpReference = res.items.filter(reference => reference.name === loggedInUser.userId)
+            console.log(userPfpReference)
+            getDownloadURL(userPfpReference[0]).then(url => {
               updateDoc(doc(db, "users", loggedInUser.userId), {
                 ...loggedInUser, ...profilePopUpData, pfp : url
               }).then(() => {window.location.reload()})
@@ -82,7 +87,7 @@ export default function Profile() {
       </section>
       <main id='user' className={isProfilePopUpVisible ? "blurred" : ""}>
         <div className="user--details">
-          <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" alt="" height="40" width="40"></img>
+          <img className="profile--img" src={loggedInUser.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt={loggedInUser.username} ></img>
           <h1 className='overstated'>{loggedInUser.username || "Anonymous"}</h1>
           <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>
         </div>
@@ -95,7 +100,7 @@ export default function Profile() {
           // default value has a empty array, if fetched and still empty, state changes to null
           loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
         }
-        <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>
+        {loggedInUsersPost && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
         <button onClick={signUserOut} className='danger--btn'>Sign Out</button>
       </main>
       </>  : <p className='understated text--center'>Loading...</p>

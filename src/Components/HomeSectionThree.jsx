@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import Post from './Post'
 
 export default function HomeSectionThree() {
+  const loggedInUser = useSelector(state => state.loggedInUser)
   const loggedInUsersPost = useSelector(state => state.loggedInUsersPost)?.slice(0, 2);
   return (
     <aside id="section--three" className="section">
       <section id="profile">
         <Link to="profile">
-          <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" alt="ConnectMe Logo" width="125" height="125"></img>
+          <img className="profile--img" src={loggedInUser.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt="ConnectMe Logo" width="125" height="125"></img>
         </Link>
         <h2>You</h2>
       </section>

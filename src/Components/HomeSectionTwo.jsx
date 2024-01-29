@@ -89,7 +89,7 @@ export default function HomeSectionTwo() {
       </form>
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
-          <img className="profile--img" src="https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png" alt="" height="40" width="40"></img>
+          <img className="profile--img" src={loggedInUser.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt={loggedInUser.username}></img>
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
           <button type="submit" className="cta">Post</button>
         </form>

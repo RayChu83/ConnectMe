@@ -117,9 +117,17 @@ main .section:hover, .search--bar:hover{
 #profile .profile--img{
   display: block;
   margin: auto;
+  height: 125px;
+  width: 125px;
+  object-fit: cover;
 }
-
-
+.profile--img{
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  object-fit: cover;
+}
 
 @media (max-width: 1250px) {
   #section--one{

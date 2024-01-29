@@ -31,6 +31,7 @@ export default function Register() {
           email : email,
           followers : [],
           following : [],
+          pfp : ""
         })
       })
       .catch(err => setError(err.message))
@@ -52,6 +53,7 @@ export default function Register() {
             email : email,
             followers : [],
             following : [],
+            pfp : ""
           })
         }
       })
