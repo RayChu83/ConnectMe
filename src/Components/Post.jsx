@@ -1,5 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { db } from '../Firebase/firebase'
 
 import profileImageLoading from "../Images/loadingProfile.jpg"
@@ -24,14 +25,16 @@ export default function Post(props) {
   return (
     <article className="post">
       <div className="post--details">
-      <div className="user--details">
-        <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} height="40" width="40"></img>
-        <h3>{creatorDetails?.username}</h3>
-        </div>
-          <small className="understated">
-            {convertDate(props.created)}
-          </small>
-        </div>
+        <Link to={`/profile/${props.creator}`}>
+          <div className="user--details">
+            <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} height="40" width="40"></img>
+            <h3>{creatorDetails?.username}</h3>
+          </div>
+        </Link>
+        <small className="understated">
+          {convertDate(props.created)}
+        </small>
+      </div>
       <section className="post-content">
       <small>{props.content}</small>
       </section>

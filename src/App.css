@@ -10,6 +10,9 @@ body{
   margin: auto;
   scroll-behavior: smooth;
 }
+a{
+  text-decoration: none;
+}
 .heading{
   font-weight: 600;
   margin: 8px 0;

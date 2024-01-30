@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import profileLoadingImage from "../Images/loadingProfile.jpg"
 import { doc, getDoc } from 'firebase/firestore'
@@ -16,12 +17,14 @@ export default function UserPreview(props) {
       }
     }
     fetchUserDataById()
+    // eslint-disable-next-line
   }, [])
-  console.log(userDetails)
   return (
-    <section>
-      <img className="profile--img" src={userDetails?.pfp || profileLoadingImage} height="40" width="40"></img>
-      <p className="username">@{userDetails?.username}</p>
-    </section>
+    <Link to={`/profile/${props.id}`}>
+      <section>
+          <img className="profile--img" src={userDetails?.pfp || profileLoadingImage} height="40" width="40" alt={userDetails?.username}></img>
+          <p className="username">@{userDetails?.username}</p>
+      </section>
+    </Link>
   )
 }
