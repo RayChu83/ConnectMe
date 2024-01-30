@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 
 import Post from './Post'
+import profileImageLoading from "../Images/loadingProfile.jpg"
 
 export default function HomeSectionThree() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -11,7 +12,7 @@ export default function HomeSectionThree() {
     <aside id="section--three" className="section">
       <section id="profile">
         <Link to="profile">
-          <img className="profile--img" src={loggedInUser.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt="ConnectMe Logo" width="125" height="125"></img>
+          <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="ConnectMe Logo" width="125" height="125"></img>
         </Link>
         <h2>You</h2>
       </section>
@@ -19,7 +20,7 @@ export default function HomeSectionThree() {
         <h3 className="heading">Your recent activity...</h3>
         {loggedInUsersPost?.length 
           ? 
-            loggedInUsersPost.map((post, index) => <Post userInfo={post.userInfo} content={post.content} created={post.created} key={index} />) 
+            loggedInUsersPost.map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} key={index} />) 
           : 
             // default value has a empty array, if fetched and still empty, state changes to null
             loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>

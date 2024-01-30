@@ -95,14 +95,20 @@ main .section:hover, .search--bar:hover{
   align-items: center ;
   gap: 10px;
   cursor: pointer;
-  width: fit-content;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+.user--details article{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .user--details h1, .user--details h3{
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
+  max-height: 1.2em;
 }
 
 /* SECTION THREE STYLES */

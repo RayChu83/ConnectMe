@@ -1,6 +1,6 @@
 import { ADD_LOGGED_IN_USER, ADD_LOGGED_IN_USERS_POSTS, CLEAR_LOGGED_IN_USER, CLEAR_LOGGED_IN_USERS_POSTS } from "../constants/actionNames"
 
-export const loggedInUserReducer = (state = "", action) => {
+export const loggedInUserReducer = (state = null, action) => {
     switch (action.type) {
         case ADD_LOGGED_IN_USER:
             return action.payload

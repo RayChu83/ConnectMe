@@ -72,7 +72,7 @@ export default function HomeSectionTwo() {
       content : newPostContent,
       created : new Date(),
       id : v4(),
-      userInfo : loggedInUser
+      creator : loggedInUser.userId
     })
     // update sidebar containing your most recent activity when creating a new post
     fetchLoggedInUsersPosts(loggedInUser.userId, dispatch)
@@ -91,12 +91,12 @@ export default function HomeSectionTwo() {
       </form>
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
-          <img className="profile--img" src={loggedInUser.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt={loggedInUser.username}></img>
+          <img className="profile--img" src={loggedInUser?.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt={loggedInUser?.username}></img>
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
           <button type="submit" className="cta">Post</button>
         </form>
           {displayedPosts ? displayedPosts.map((post, index) => (
-            <Post userInfo={post.userInfo} content={post.content} created={post.created} key={index}/>
+            <Post creator={post.creator} content={post.content} created={post.created} key={index}/>
           )) : <p className='understated text--center'>Loading...</p>}
       </div>
     </div>

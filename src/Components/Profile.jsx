@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from "firebase/storage"
-import { useSelector } from 'react-redux'
-import Post from './Post'
-
-import "../styles/user.css"
 import { auth, db, storage } from '../Firebase/firebase'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { useSelector } from 'react-redux'
+
+import profileImageLoading from "../Images/loadingProfile.jpg"
+import Post from './Post'
+import "../styles/user.css"
 
 export default function Profile() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -14,9 +15,8 @@ export default function Profile() {
   const [profilePopUpData, setProfilePopUpData] = useState({username : "", email : "", description: ""})
   const [imageUpload, setImageUpload] = useState(undefined)
   const [isShowingAll, setIsShowingAll] = useState(false)
-  const allLoggedInUsersPosts = useSelector(state => state?.loggedInUsersPost)
-  console.log(allLoggedInUsersPosts)
   const loggedInUsersPost = useSelector(state => (isShowingAll ? state.loggedInUsersPost : state.loggedInUsersPost?.slice(0, 2)));
+  
   const toggleShowAllPosts = () => {
     setIsShowingAll(prevState => !prevState)
   }
@@ -57,18 +57,9 @@ export default function Profile() {
     }else{
       await updateDoc(doc(db, "users", loggedInUser.userId), {
         ...loggedInUser, ...profilePopUpData
-    })
-    // update all users posts with the updated profile change
-    
-    getDoc(doc(db, "users", loggedInUser.userId)).then(res => {
-      Promise.all(
-      allLoggedInUsersPosts.map(async (post) => {
-        await updateDoc(doc(db, "posts", post.id), {
-            ...post, userInfo : {...res.data()}
-          })
-        })).then(() => window.location.reload())
-      })
-  }}
+    })}
+    setIsProfilePopUpVisible(false)
+  }
   useEffect(() => {
     if (loggedInUser?.username || loggedInUser?.email || loggedInUser?.description) {
       setProfilePopUpData({username : loggedInUser.username, email : loggedInUser.email, description: loggedInUser.description})
@@ -97,18 +88,20 @@ export default function Profile() {
       </section>
       <main id='user' className={isProfilePopUpVisible ? "blurred" : ""}>
         <div className="user--details">
-          <img className="profile--img" src={loggedInUser.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt={loggedInUser.username} ></img>
-          <h1 className='overstated'>{loggedInUser.username || "Anonymous"}</h1>
+          <article>
+            <img className="profile--img" src={loggedInUser.pfp || profileImageLoading} alt={loggedInUser.username} ></img>
+            <h1 className='overstated'>{loggedInUser.username || "Anonymous"}</h1>
+          </article>
           <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>
         </div>
         <p>{loggedInUser.description || "No description found..."}</p>
         <p className='user--following--followers'><span className='heading underline pointer'>{loggedInUser.following.length} Following</span><span className='heading underline pointer'>{loggedInUser.followers.length} Followers</span></p>
         {loggedInUsersPost?.length 
           ? 
-          loggedInUsersPost.map((post, index) => <Post userInfo={post.userInfo} content={post.content} created={post.created} key={index} />) 
+            loggedInUsersPost.map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} key={index} />) 
           : 
           // default value has a empty array, if fetched and still empty, state changes to null
-          loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
+            loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
         }
         {loggedInUsersPost && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
         <button onClick={signUserOut} className='danger--btn'>Sign Out</button>

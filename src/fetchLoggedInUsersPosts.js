@@ -5,7 +5,7 @@ import { setLoggedInUsersPosts, setLoggedInUsersPostsCleared } from "./Redux/act
 async function fetchLoggedInUsersPosts(userId, dispatch) {
     const allUsersPosts = []
     const docRef = collection(db, "posts");
-    const q = query(docRef, where("userInfo.userId", "==", userId), orderBy("created", "desc"))
+    const q = query(docRef, where("creator", "==", userId), orderBy("created", "desc"))
     const querySnapshot = await getDocs(q)
     querySnapshot.forEach((doc) => {
       allUsersPosts.push(doc.data())

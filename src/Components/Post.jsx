@@ -1,16 +1,32 @@
-import React from 'react'
+import { doc, getDoc } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
+import { db } from '../Firebase/firebase'
+
+import profileImageLoading from "../Images/loadingProfile.jpg"
 
 export default function Post(props) {
+  const [creatorDetails, setCreatorDetails] = useState(null)
   const convertDate = (timestamp) => {
     let dateObject = timestamp.toDate()
     return `${dateObject.getMonth() + 1} / ${dateObject.getDate()} / ${dateObject.getFullYear()}`
   }
+  useEffect(() => {
+    async function fetchUserDataById() {
+      const userSnap = await getDoc(doc(db, "users", props.creator))
+      if (userSnap.exists()) {
+        setCreatorDetails(userSnap.data())
+      }else {
+        setCreatorDetails({username : "Content Deleted"})
+      }
+    }
+    fetchUserDataById()
+  }, [])
   return (
     <article className="post">
       <div className="post--details">
       <div className="user--details">
-        <img className="profile--img" src={props.userInfo.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} height="40" width="40"></img>
-        <h3>{props.userInfo.username}</h3>
+        <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} height="40" width="40"></img>
+        <h3>{creatorDetails?.username}</h3>
         </div>
           <small className="understated">
             {convertDate(props.created)}
