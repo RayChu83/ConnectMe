@@ -10,6 +10,7 @@ export default function ProtectedRouteLayout() {
     if (!isLoggedIn) {
       navigate("login")
     }
+    // eslint-disable-next-line
   }, [isLoggedIn])
   return (
     <>

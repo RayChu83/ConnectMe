@@ -13,10 +13,11 @@ export default function ProtectedRouteLayout() {
     if (isLoggedIn) {
       navigate(-1)
     }
+     // eslint-disable-next-line
   }, [isLoggedIn])
   return (
     <main id='account--access--container'>
-      <img src={logoSharpened}></img>
+      <img src={logoSharpened} alt="ConnectMe Logo"></img>
       <Outlet />
     </main>
   )

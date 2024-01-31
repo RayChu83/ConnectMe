@@ -13,6 +13,7 @@ import Profile from './Components/Profile';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import './App.css';
+import ProfileLayout from './Layouts/ProfileLayout';
 
 function App() {
   return (
@@ -23,7 +24,11 @@ function App() {
             <Route path="/" element={<AppLayout />}>
               <Route element={<LoggedInProtectedLayout />}>
                 <Route index element={<Home />}/>
-                <Route path='profile' element={<Profile/>}/>
+                <Route path='profile' element={<ProfileLayout/>}>
+                  <Route index element={<Profile/>}/>
+                  {/* <Route path='/following' element={<ProfileFollowing/>}/> */}
+                  {/* <Route path='/followers' element={<ProfileFollowers/>}/> */}
+                </Route>
               </Route>
               <Route path='about' element={<About />}/>
             </Route>
