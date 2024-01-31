@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Outlet } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 
 import profileImageLoading from "../Images/loadingProfile.jpg"
 import { db, storage } from '../Firebase/firebase'
@@ -76,14 +76,16 @@ export default function ProfileLayout() {
         </section>
         <main id='user' className={isProfilePopUpVisible ? "blurred" : ""}>
           <div className="user--details">
-            <article>
-              <img className="profile--img" src={loggedInUser.pfp || profileImageLoading} alt={loggedInUser.username} ></img>
-              <h1 className='overstated'>{loggedInUser.username || "Anonymous"}</h1>
-            </article>
+            <Link to="">
+              <article>
+                <img className="profile--img" src={loggedInUser.pfp || profileImageLoading} alt={loggedInUser.username} ></img>
+                <h1 className='overstated'>{loggedInUser.username || "Anonymous"}</h1>
+              </article>
+            </Link>
             <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>
           </div>
           <p>{loggedInUser.description || "No description found..."}</p>
-          <p className='user--following--followers'><span className='heading underline pointer'>{loggedInUser.following.length} Following</span><span className='heading underline pointer'>{loggedInUser.followers.length} Followers</span></p>
+          <p className='user--following--followers'><Link to="following" className='heading underline pointer'>{loggedInUser.following.length} Following</Link><Link to="followers" className='heading underline pointer'>{loggedInUser.followers.length} Followers</Link></p>
           <Outlet/>
         </main>
         </>  : <p className='understated text--center'>Loading...</p>

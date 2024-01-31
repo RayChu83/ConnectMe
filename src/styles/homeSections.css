@@ -23,7 +23,7 @@ main .section:hover, .search--bar:hover{
 /* SECTION ONE STYLES */
 
 
-#section--one section{
+#user--preview{
   padding: 12px;
   margin: 15px 0;
   background-color: #20212f;

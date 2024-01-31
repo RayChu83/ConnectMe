@@ -14,6 +14,7 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import './App.css';
 import ProfileLayout from './Layouts/ProfileLayout';
+import ProfileFollowing from './Components/ProfileFollowing';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
                 <Route index element={<Home />}/>
                 <Route path='profile' element={<ProfileLayout/>}>
                   <Route index element={<Profile/>}/>
-                  {/* <Route path='/following' element={<ProfileFollowing/>}/> */}
+                  <Route path='following' element={<ProfileFollowing/>}/>
                   {/* <Route path='/followers' element={<ProfileFollowers/>}/> */}
                 </Route>
               </Route>

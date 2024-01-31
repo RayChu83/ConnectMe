@@ -21,7 +21,7 @@ export default function UserPreview(props) {
   }, [])
   return (
     <Link to={`/profile/${props.id}`}>
-      <section>
+      <section id='user--preview'>
           <img className="profile--img" src={userDetails?.pfp || profileLoadingImage} height="40" width="40" alt={userDetails?.username}></img>
           <p className="username">@{userDetails?.username}</p>
       </section>
