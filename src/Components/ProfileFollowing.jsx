@@ -16,7 +16,7 @@ export default function ProfileFollowing() {
   return (
     <>
       {loggedInUsersFollowing && loggedInUsersFollowing.map((user, index) => <UserPreview id={user} key={index}/>)}
-      {totalFollowing > 3 ? <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p> : totalFollowing === 0 && <p className='understated text--center'>You are not following anyone yet, <Link to="/home" className='text--cta'>Discover people</Link></p>}
+      {totalFollowing > 3 ? <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p> : totalFollowing === 0 && <p className='understated text--center'>You are not following anyone yet, <Link to="/" className='text--cta'>Discover people</Link></p>}
     </>
   )
 }
