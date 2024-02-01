@@ -14,7 +14,7 @@ export default function HomeSectionThree() {
         <Link to="profile">
           <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="ConnectMe Logo" width="125" height="125"></img>
         </Link>
-        <h2>You</h2>
+        <h2>{loggedInUser?.username || "-----"}</h2>
       </section>
       <article>
         <h3 className="heading">Your recent activity...</h3>

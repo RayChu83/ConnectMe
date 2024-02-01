@@ -21,13 +21,14 @@ export default function Post(props) {
       }
     }
     fetchUserDataById()
-  }, [])
+    // eslint-disable-next-line
+  }, [props.creator])
   return (
     <article className="post">
       <div className="post--details">
         <Link to={`/profile/${props.creator}`}>
           <div className="user--details">
-            <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} height="40" width="40"></img>
+            <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} alt={creatorDetails?.username}></img>
             <h3>{creatorDetails?.username}</h3>
           </div>
         </Link>

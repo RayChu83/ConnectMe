@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { collection, onSnapshot, query, orderBy, addDoc, } from "firebase/firestore";
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { collection, onSnapshot, query, orderBy, setDoc, doc, } from "firebase/firestore";
+import { v4 } from 'uuid';
 
 import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
 import Post from './Post';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import fetchLoggedInUsersPosts from '../fetchLoggedInUsersPosts';
-import { v4 } from 'uuid';
+import profileImageLoading from "../Images/loadingProfile.jpg"
 
 export default function HomeSectionTwo() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -68,10 +69,11 @@ export default function HomeSectionTwo() {
 
   const handleNewPost = async (e) => {
     e.preventDefault()
-    await addDoc(collection(db, "posts"), {
+    const id = v4()
+    await setDoc(doc(db, "posts", id), {
       content : newPostContent,
       created : new Date(),
-      id : v4(),
+      id : id,
       creator : loggedInUser.userId
     })
     // update sidebar containing your most recent activity when creating a new post
@@ -91,13 +93,14 @@ export default function HomeSectionTwo() {
       </form>
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
-          <img className="profile--img" src={loggedInUser?.pfp || "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png"} alt={loggedInUser?.username}></img>
+          <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img>
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
           <button type="submit" className="cta">Post</button>
         </form>
-          {displayedPosts ? displayedPosts.map((post, index) => (
-            <Post creator={post.creator} content={post.content} created={post.created} key={index}/>
-          )) : <p className='understated text--center'>Loading...</p>}
+          {displayedPosts ? displayedPosts.map((post, index) => {
+            console.log(post)
+            return <Post creator={post.creator} content={post.content} created={post.created} key={index}/>
+          }) : <p className='understated text--center'>Loading...</p>}
       </div>
     </div>
   )
