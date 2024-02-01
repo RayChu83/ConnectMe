@@ -25,6 +25,10 @@ a{
   border-radius: 12px;
   cursor: pointer;
 }
+.text--cta{
+  color: #493aac;
+  font-weight: 500;
+}
 .expand{
   width: 100%;
 }

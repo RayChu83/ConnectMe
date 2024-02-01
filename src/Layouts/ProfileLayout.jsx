@@ -85,7 +85,8 @@ export default function ProfileLayout() {
             <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>
           </div>
           <p>{loggedInUser.description || "No description found..."}</p>
-          <p className='user--following--followers'><Link to="following" className='heading underline pointer'>{loggedInUser.following.length} Following</Link><Link to="followers" className='heading underline pointer'>{loggedInUser.followers.length} Followers</Link></p>
+          {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}
+          <p className='user--following--followers'><Link to="following" className='heading underline pointer'>{[...new Set(loggedInUser.following)].length} Following</Link><Link to="followers" className='heading underline pointer'>{[...new Set(loggedInUser.followers)].length} Followers</Link></p>
           <Outlet/>
         </main>
         </>  : <p className='understated text--center'>Loading...</p>

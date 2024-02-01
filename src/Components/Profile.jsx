@@ -9,6 +9,7 @@ import "../styles/user.css"
 export default function Profile() {
   const [isShowingAll, setIsShowingAll] = useState(false)
   const loggedInUsersPost = useSelector(state => (isShowingAll ? state.loggedInUsersPost : state.loggedInUsersPost?.slice(0, 2)));
+  const totalPosts = useSelector(state => state.loggedInUsersPost?.length);
   
   const toggleShowAllPosts = () => {
     setIsShowingAll(prevState => !prevState)
@@ -26,7 +27,7 @@ export default function Profile() {
         // default value has a empty array, if fetched and still empty, state changes to null
           loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
       }
-      {loggedInUsersPost && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
+      {totalPosts > 3 &&  <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
       <button onClick={signUserOut} className='danger--btn'>Sign Out</button>
     </>
   )

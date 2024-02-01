@@ -15,6 +15,7 @@ import Register from './Components/Register';
 import './App.css';
 import ProfileLayout from './Layouts/ProfileLayout';
 import ProfileFollowing from './Components/ProfileFollowing';
+import ProfileFollowers from './Components/ProfileFollowers';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
                 <Route path='profile' element={<ProfileLayout/>}>
                   <Route index element={<Profile/>}/>
                   <Route path='following' element={<ProfileFollowing/>}/>
-                  {/* <Route path='/followers' element={<ProfileFollowers/>}/> */}
+                  <Route path='followers' element={<ProfileFollowers/>}/>
                 </Route>
               </Route>
               <Route path='about' element={<About />}/>
