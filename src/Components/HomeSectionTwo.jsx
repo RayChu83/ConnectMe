@@ -97,10 +97,9 @@ export default function HomeSectionTwo() {
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
           <button type="submit" className="cta">Post</button>
         </form>
-          {displayedPosts ? displayedPosts.map((post, index) => {
-            console.log(post)
-            return <Post creator={post.creator} content={post.content} created={post.created} key={index}/>
-          }) : <p className='understated text--center'>Loading...</p>}
+          {displayedPosts ? displayedPosts.map((post, index) => (
+            <Post creator={post.creator} content={post.content} created={post.created} key={index}/>
+          )) : <p className='understated text--center'>Loading...</p>}
       </div>
     </div>
   )

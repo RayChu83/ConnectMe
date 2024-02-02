@@ -5,7 +5,7 @@ import UserPreview from './UserPreview'
 import { useSelector } from 'react-redux'
 
 export default function HomeSectionOne() {
-  const following = useSelector(state => state.loggedInUser?.following)
+  const following = useSelector(state => [...new Set(state.loggedInUser?.following)])
   return (
     <aside id="section--one" className="section">
       <h3 className="heading">You're Following...</h3>

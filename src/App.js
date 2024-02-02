@@ -31,6 +31,11 @@ function App() {
                   <Route path='following' element={<ProfileFollowing/>}/>
                   <Route path='followers' element={<ProfileFollowers/>}/>
                 </Route>
+                <Route path='user/:id' element={<ProfileLayout/>}>
+                  <Route index element={<Profile/>}/>
+                  <Route path='following' element={<ProfileFollowing/>}/>
+                  <Route path='followers' element={<ProfileFollowers/>}/>
+                </Route>
               </Route>
               <Route path='about' element={<About />}/>
             </Route>
