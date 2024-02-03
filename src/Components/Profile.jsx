@@ -25,8 +25,8 @@ export default function Profile() {
   useEffect(() => {
     async function fetchPosts() {
       const allPosts = await fetchPostsById(userId)
-      setAllPosts(allPosts.length)
-      setUsersPosts(isShowingAll ? allPosts : allPosts?.slice(0, 2))
+      setAllPosts(allPosts?.length)
+      setUsersPosts(allPosts)
     }
     fetchPosts()
     // eslint-disable-next-line 
@@ -35,7 +35,9 @@ export default function Profile() {
     <>
       {usersPosts?.length 
         ? 
-          usersPosts.map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} key={index} />) 
+          usersPosts
+            .slice(!isShowingAll ? 0: undefined, isShowingAll ? undefined : 2)
+            .map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} key={index} />) 
         : 
         // default value has a empty array, if fetched and still empty, state changes to null
           usersPosts?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
