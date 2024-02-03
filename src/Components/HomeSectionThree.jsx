@@ -10,12 +10,12 @@ export default function HomeSectionThree() {
   const loggedInUsersPost = useSelector(state => state.loggedInUsersPost)?.slice(0, 2);
   return (
     <aside id="section--three" className="section">
-      <section id="profile">
-        <Link to={`/user/${loggedInUser?.userId}`}>
-          <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="ConnectMe Logo" width="125" height="125"></img>
-        </Link>
-        <h2>{loggedInUser?.username || "-----"}</h2>
-      </section>
+      <Link to={`/user/${loggedInUser?.userId}`}>
+        <section id="profile">
+            <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="ConnectMe Logo" width="125" height="125"></img>
+          <h2>{loggedInUser?.username || "-----"}</h2>
+        </section>
+      </Link>
       <article>
         <h3 className="heading">Your recent activity...</h3>
         {loggedInUsersPost?.length 

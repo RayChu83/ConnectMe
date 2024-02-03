@@ -4,7 +4,7 @@ import { Outlet, Link, NavLink, useParams } from 'react-router-dom'
 
 import profileImageLoading from "../Images/loadingProfile.jpg"
 import { db, storage } from '../Firebase/firebase'
-import { doc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { deleteObject, getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage'
 import fetchUserById from '../fetchUserById'
 
@@ -52,6 +52,24 @@ export default function ProfileLayout() {
     })}
     setIsProfilePopUpVisible(false)
   }
+  const follow = async () => {
+    await updateDoc(doc(db, "users", loggedInUser.userId), {
+      following : arrayUnion(userId)
+    })
+    await updateDoc(doc(db, "users", userId), {
+      followers : arrayUnion(loggedInUser.userId)
+    })
+    window.location.reload()
+  }
+  const unfollow = async () => {
+    await updateDoc(doc(db, "users", loggedInUser.userId), {
+      following : arrayRemove(userId)
+    })
+    await updateDoc(doc(db, "users", userId), {
+      followers : arrayRemove(loggedInUser.userId)
+    })
+    window.location.reload()
+  }
   useEffect(() => {
     if (user?.username || user?.email || user?.description) {
       setProfilePopUpData({username : user.username, email : user.email, description: user.description})
@@ -95,7 +113,7 @@ export default function ProfileLayout() {
                   <h1 className='overstated'>{user.username || "Anonymous"}</h1>
                 </article>
               </Link>
-              {loggedInUser?.userId === user?.userId && <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>}
+              {loggedInUser?.userId === user?.userId ? <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big> : user?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}>Unfollow</button> : <button className='cta' onClick={follow}>Follow</button>}
             </div>
             <p className={!user.description ? "understated" : null}>{user.description || "No description found..."}</p>
             {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}
