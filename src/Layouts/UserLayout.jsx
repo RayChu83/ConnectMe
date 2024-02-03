@@ -4,7 +4,7 @@ import { auth, db } from '../Firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Outlet } from 'react-router-dom';
 
-import { setLoggedInTrue, setLoggedInFalse, setLoggedInUser, setLoggedInUserCleared, setLoggedInUsersPosts, setLoggedInUsersPostsCleared } from '../Redux/actions/actions';
+import { setLoggedInTrue, setLoggedInFalse, setLoggedInUser, setLoggedInUserCleared, setLoggedInUsersPostsCleared } from '../Redux/actions/actions';
 import { doc, getDoc} from 'firebase/firestore';
 import fetchLoggedInUsersPosts from '../fetchLoggedInUsersPosts';
 
