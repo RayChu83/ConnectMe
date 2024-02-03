@@ -93,7 +93,7 @@ main .section:hover, .search--bar:hover{
 .user--details{
   display: flex;
   align-items: center ;
-  gap: 10px;
+  gap: 11px;
   cursor: pointer;
   flex-wrap: wrap;
   justify-content: space-between;

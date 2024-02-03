@@ -76,11 +76,11 @@ export default function ProfileLayout() {
               </article>
               <form id='profile--edit--form' onSubmit={handleSubmit}>
                 <label htmlFor="edit--username">Username:</label>
-                <input type="text" id='edit--username' value={profilePopUpData?.username} name='username' onChange={handleChange} maxLength="20"/>
+                <input type="text" id='edit--username' value={profilePopUpData?.username} name='username' onChange={handleChange} maxLength="20" placeholder='Username'/>
                 <label htmlFor="edit--email">Email:</label>
                 <input type="text" id='edit--email' value={profilePopUpData?.email} readOnly className='understated' name='email' onChange={handleChange}/>
                 <label htmlFor="edit--description">Description:</label>
-                <input type="text" id='edit--description' value={profilePopUpData?.description} name='description' onChange={handleChange} maxLength="250"/>
+                <input type="text" id='edit--description' value={profilePopUpData?.description} name='description' onChange={handleChange} maxLength="250" placeholder='Description'/>
                 <label htmlFor="edit--pfp">Profile Picture:</label>
                 <input type="file" id='edit--pfp' className='pointer' onChange={handleProfilePictureChange}/>
                 <button className='cta'>Save Changes</button>
@@ -97,7 +97,7 @@ export default function ProfileLayout() {
               </Link>
               {loggedInUser.userId === user.userId && <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>}
             </div>
-            <p>{user.description || "No description found..."}</p>
+            <p className={!user.description ? "understated" : null}>{user.description || "No description found..."}</p>
             {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}
             <p className='user--following--followers'><NavLink to="following" className='heading underline pointer'>{[...new Set(user.following)].length} Following</NavLink><NavLink to="followers" className='heading underline pointer'>{[...new Set(user.followers)].length} Followers</NavLink></p>
             <Outlet/>

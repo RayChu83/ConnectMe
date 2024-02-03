@@ -11,7 +11,7 @@ export default function HomeSectionThree() {
   return (
     <aside id="section--three" className="section">
       <section id="profile">
-        <Link to="profile">
+        <Link to={`/user/${loggedInUser?.userId}`}>
           <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="ConnectMe Logo" width="125" height="125"></img>
         </Link>
         <h2>{loggedInUser?.username || "-----"}</h2>
@@ -26,7 +26,7 @@ export default function HomeSectionThree() {
             loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
         }
       </article>
-      <Link to="/profile">
+      <Link to={`/user/${loggedInUser?.userId}`}>
         <button className="cta expand">View All</button>  
       </Link>
     </aside>

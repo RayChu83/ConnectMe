@@ -95,7 +95,7 @@ export default function HomeSectionTwo() {
         <form className="post--form" onSubmit={handleNewPost}>
           <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img>
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
-          <button type="submit" className="cta">Post</button>
+          <button type="submit" className="cta" disabled={!newPostContent && true}>Post</button>
         </form>
           {displayedPosts ? displayedPosts.map((post, index) => (
             <Post creator={post.creator} content={post.content} created={post.created} key={index}/>

@@ -25,7 +25,7 @@ export default function Profile() {
   useEffect(() => {
     async function fetchPosts() {
       const allPosts = await fetchPostsById(userId)
-      setAllPosts(allPosts)
+      setAllPosts(allPosts.length)
       setUsersPosts(isShowingAll ? allPosts : allPosts?.slice(0, 2))
     }
     fetchPosts()
