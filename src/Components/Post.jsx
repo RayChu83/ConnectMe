@@ -26,7 +26,7 @@ export default function Post(props) {
   return (
     <article className="post">
       <div className="post--details">
-        <Link to={`/profile/${props.creator}`}>
+        <Link to={`/user/${props.creator}`}>
           <div className="user--details">
             <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} alt={creatorDetails?.username}></img>
             <h3>{creatorDetails?.username}</h3>
