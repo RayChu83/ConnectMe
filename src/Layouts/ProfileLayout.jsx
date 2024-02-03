@@ -9,7 +9,7 @@ import { deleteObject, getDownloadURL, listAll, ref, uploadBytes } from 'firebas
 import fetchUserById from '../fetchUserById'
 
 export default function ProfileLayout() {
-  const userId = useParams().id
+  const userId = useParams()?.id
   const loggedInUser = useSelector(state => state.loggedInUser)
   const [user, setUser] = useState(null)
   const [isProfilePopUpVisible, setIsProfilePopUpVisible] = useState(false)
@@ -68,7 +68,7 @@ export default function ProfileLayout() {
   return (
     user ? 
         <>
-          {loggedInUser.userId === user.userId &&
+          {loggedInUser?.userId === user?.userId &&
             <section id='user--edit' className={isProfilePopUpVisible ? "visible" : ""}>
               <article className='user--edit--heading'>
                 <h2>Edit Profile</h2>
@@ -95,11 +95,11 @@ export default function ProfileLayout() {
                   <h1 className='overstated'>{user.username || "Anonymous"}</h1>
                 </article>
               </Link>
-              {loggedInUser.userId === user.userId && <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>}
+              {loggedInUser?.userId === user?.userId && <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big>}
             </div>
             <p className={!user.description ? "understated" : null}>{user.description || "No description found..."}</p>
             {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}
-            <p className='user--following--followers'><NavLink to="following" className='heading underline pointer'>{[...new Set(user.following)].length} Following</NavLink><NavLink to="followers" className='heading underline pointer'>{[...new Set(user.followers)].length} Followers</NavLink></p>
+            <p className='user--following--followers'><NavLink to="following" className='heading pointer'>{[...new Set(user.following)].length} Following</NavLink><NavLink to="followers" className='heading pointer'>{[...new Set(user.followers)].length} Followers</NavLink></p>
             <Outlet/>
           </main>
         </>  : <p className='understated text--center'>Loading...</p>

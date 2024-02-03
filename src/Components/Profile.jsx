@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom'
 import fetchPostsById from './../fetchPostsById';
 
 export default function Profile() {
-  const userId = useParams().id
+  const userId = useParams()?.id
   const loggedInUser = useSelector(state => state.loggedInUser)
   const [isShowingAll, setIsShowingAll] = useState(false)
   const [usersPosts, setUsersPosts] = useState([])
@@ -43,7 +43,7 @@ export default function Profile() {
           usersPosts?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
       }
       {allPosts > 3 && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
-      {loggedInUser.userId === userId && <button onClick={signUserOut} className='danger--btn'>Sign Out</button>}
+      {loggedInUser?.userId === userId && <button onClick={signUserOut} className='danger--btn'>Sign Out</button>}
     </>
   )
 }

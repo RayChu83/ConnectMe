@@ -27,10 +27,10 @@ export default function NavigationBar() {
       </Link>
       <i className="fa-solid fa-bars nav--bars" style={{display: "none"}} onClick={toggleNavDropdown}></i>
       <ul style={navDropdown ? {display: "flex"} : null}>
-        <li onClick={hideDropdown}><NavLink to="/"><i className="fa-solid fa-house"></i></NavLink></li>
-        <li onClick={hideDropdown}><NavLink to="/about"><i className="fa-solid fa-circle-info"></i></NavLink></li>
-        <li onClick={() => {toggleSearchbarFocus(); hideDropdown()}}><Link to="/"><i className="fa-solid fa-magnifying-glass"></i></Link></li>
-        <li onClick={hideDropdown}><NavLink to={`/user/${loggedInUser?.userId}`}><i className="fa-solid fa-user"></i></NavLink></li>
+        <li onClick={hideDropdown}><NavLink to="/"><i className="fa-solid fa-house understated"></i></NavLink></li>
+        <li onClick={hideDropdown}><NavLink to="/about"><i className="fa-solid fa-circle-info understated"></i></NavLink></li>
+        <li onClick={() => {toggleSearchbarFocus(); hideDropdown()}}><Link to="/"><i className="fa-solid fa-magnifying-glass understated"></i></Link></li>
+        <li onClick={hideDropdown}><NavLink to={`/user/${loggedInUser?.userId}`}><i className="fa-solid fa-user understated"></i></NavLink></li>
       </ul>
     </nav>
   )

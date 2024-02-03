@@ -20,7 +20,7 @@ export default function UserPreview(props) {
     // eslint-disable-next-line
   }, [])
   return (
-    <Link to={`/profile/${props.id}`}>
+    <Link to={`/user/${props.id}`}>
       <section id='user--preview'>
           <img className="profile--img" src={userDetails?.pfp || profileLoadingImage} height="40" width="40" alt={userDetails?.username}></img>
           <p className="username">@{userDetails?.username}</p>

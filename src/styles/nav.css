@@ -31,10 +31,8 @@ nav ul{
 nav li{
   cursor: pointer;
 }
-.active{
-  padding: 7px 9px;
-  background: rgba(255, 255, 255, 0.100);
-  border-radius: 5px;
+.active i{
+  color: white;
 }
 @media (max-width: 750px) {
   nav{

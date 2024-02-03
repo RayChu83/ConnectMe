@@ -32,7 +32,7 @@ export default function ProfileFollowing() {
         ? 
           <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p> 
         : 
-          usersTotalFollowing === 0 && <p className='understated text--center'>{userId === loggedInUser.userId ? (<>You are not following anyone yet, <Link to="/" className='text--cta'>Discover people</Link></>) : "This user is currently not following anyone"}</p>
+          usersTotalFollowing === 0 && <p className='understated text--center'>{userId === loggedInUser.userId ? (<>You are not following anyone yet, <Link to="/" className='text--cta'>Discover people!</Link></>) : "This user is currently not following anyone"}</p>
       }
     </>
   )

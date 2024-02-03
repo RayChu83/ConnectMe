@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy, setDoc, doc, } from "firebase/firestore";
 import { v4 } from 'uuid';
 
@@ -93,7 +93,7 @@ export default function HomeSectionTwo() {
       </form>
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
-          <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img>
+          <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange}></input>
           <button type="submit" className="cta" disabled={!newPostContent && true}>Post</button>
         </form>
