@@ -7,7 +7,6 @@ import { v4 } from 'uuid';
 import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
 import Post from './Post';
-import fetchLoggedInUsersPosts from '../fetchLoggedInUsersPosts';
 import profileImageLoading from "../Images/loadingProfile.jpg"
 
 export default function HomeSectionTwo() {
@@ -77,7 +76,6 @@ export default function HomeSectionTwo() {
       creator : loggedInUser.userId
     })
     // update sidebar containing your most recent activity when creating a new post
-    fetchLoggedInUsersPosts(loggedInUser.userId, dispatch)
     setNewPostContent("")
   }
   const handleSearch = (e) => {

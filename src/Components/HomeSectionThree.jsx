@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 
 import Post from './Post'
 import profileImageLoading from "../Images/loadingProfile.jpg"
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { db } from '../Firebase/firebase';
 
 export default function HomeSectionThree() {
   const loggedInUser = useSelector(state => state.loggedInUser)
-  const loggedInUsersPost = useSelector(state => state.loggedInUsersPost)?.slice(0, 2);
+  const [loggedInUsersPost, setLoggedInUsersPost] = useState([])
+  useEffect(() => {
+    if (loggedInUser?.userId) {
+      const q = query(collection(db, "posts"), orderBy("created", "desc"), where("creator", "==", loggedInUser.userId))
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        let posts = snapshot.docs.map(doc => ({
+          ...doc.data()
+        }))
+        setLoggedInUsersPost(posts.slice(0, 2))
+      },
+      (error) => {
+        console.error(error)
+      });
+    return unsubscribe
+    }
+  }, [loggedInUser])
   return (
     <aside id="section--three" className="section">
       <Link to={`/user/${loggedInUser?.userId}`}>

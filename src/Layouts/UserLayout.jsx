@@ -6,7 +6,6 @@ import { Outlet } from 'react-router-dom';
 
 import { setLoggedInTrue, setLoggedInFalse, setLoggedInUser, setLoggedInUserCleared, setLoggedInUsersPostsCleared } from '../Redux/actions/actions';
 import { doc, getDoc} from 'firebase/firestore';
-import fetchLoggedInUsersPosts from '../fetchLoggedInUsersPosts';
 
 export default function UserLayout() {
   const dispatch = useDispatch()
@@ -20,7 +19,6 @@ export default function UserLayout() {
           dispatch(setLoggedInUser(docSnap.data()))
         }
         fetchLoggedInUser()
-        fetchLoggedInUsersPosts(user.uid, dispatch)
       } else {
         dispatch(setLoggedInFalse())
         dispatch(setLoggedInUserCleared())

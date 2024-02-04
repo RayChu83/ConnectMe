@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
-import { auth} from '../Firebase/firebase'
+import { auth, db} from '../Firebase/firebase'
 import { useSelector } from 'react-redux'
 
 import Post from './Post'
 import "../styles/user.css"
 import { useParams } from 'react-router-dom'
-import fetchPostsById from './../fetchPostsById';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 
 export default function Profile() {
   const userId = useParams()?.id
   const loggedInUser = useSelector(state => state.loggedInUser)
   const [isShowingAll, setIsShowingAll] = useState(false)
   const [usersPosts, setUsersPosts] = useState([])
-  const [allPosts, setAllPosts] = useState([])
   
   const toggleShowAllPosts = () => {
     setIsShowingAll(prevState => !prevState)
@@ -23,12 +22,19 @@ export default function Profile() {
       .catch(err => console.error(err))
   }
   useEffect(() => {
-    async function fetchPosts() {
-      const allPosts = await fetchPostsById(userId)
-      setAllPosts(allPosts?.length)
-      setUsersPosts(allPosts)
+    if (userId) {
+      const q = query(collection(db, "posts"), orderBy("created", "desc"), where("creator", "==", userId))
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        let posts = snapshot.docs.map(doc => ({
+          ...doc.data()
+        }))
+        setUsersPosts(posts)
+      },
+      (error) => {
+        console.error(error)
+      });
+    return unsubscribe
     }
-    fetchPosts()
     // eslint-disable-next-line 
   }, [userId])
   return (
@@ -42,7 +48,7 @@ export default function Profile() {
         // default value has a empty array, if fetched and still empty, state changes to null
           usersPosts?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
       }
-      {allPosts > 3 && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
+      {usersPosts.length > 3 && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
       {loggedInUser?.userId === userId && <button onClick={signUserOut} className='danger--btn'>Sign Out</button>}
     </>
   )
