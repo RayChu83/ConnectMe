@@ -21,9 +21,6 @@ export default function Login() {
     e.preventDefault()
     const {email, password} = formData
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("logged in")
-      })
       .catch(err => setError(err.message))
   }
   const googleLogin = () => {
@@ -49,6 +46,9 @@ export default function Login() {
       })
       .catch(err => setError(err.message))
   }
+  const demo = () => {
+    setFormData({email : "demo@demo.demo", password : "demo1234"})
+  }
   return (
     <section>
       <h1>Log In to an existing <br /> account.</h1>
@@ -59,7 +59,8 @@ export default function Login() {
         <label htmlFor="login--password">Password:</label>
         <input name='password' onChange={updateFormData} value={formData.password} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' required autoComplete='true'/>
         <small className='understated pointer' onClick={changePasswordVisibility}>{isPasswordShown ? "Hide Password" : "Show Password"}</small>
-        <button className='google--account--access' type='button' onClick={googleLogin}><img src={Google} alt="Google Logo" height="16"/>Login With Google</button>
+        <button className='auth--btn google--account--access' type='button' onClick={googleLogin}><img src={Google} alt="Google Logo" height="16"/>Login With Google</button>
+        <button className='auth--btn demo--access' onClick={demo} type='submit'>Try With Demo</button>
         <button className='cta expand'>Login</button>
       </form>
       <small>Don't have an account, <strong><Link to="/register" replace>Register</Link></strong></small>

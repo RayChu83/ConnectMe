@@ -28,16 +28,24 @@
     border: none;
     outline: none;
 }
-.google--account--access{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: center;
+.auth--btn{
     color: black;
     padding: 12px;
     border-radius: 12px;
     border: none;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.google--account--access{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+}
+.demo--access{
+    background-color: black !important;
+    color: white !important;
+    font-weight: 500;
 }
 .account--access--forms input:hover, .account--access--forms button:hover{
     filter: drop-shadow(0 3px 5px #121218);

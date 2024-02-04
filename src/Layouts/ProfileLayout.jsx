@@ -15,6 +15,7 @@ export default function ProfileLayout() {
   const [isProfilePopUpVisible, setIsProfilePopUpVisible] = useState(false)
   const [profilePopUpData, setProfilePopUpData] = useState({username : "", email : "", description: ""})
   const [imageUpload, setImageUpload] = useState(undefined)
+  const [submitDisabled, setSubmitDisabled] = useState(false)
 
   const editProfile = () => {
     setIsProfilePopUpVisible(prevState => !prevState)
@@ -28,6 +29,7 @@ export default function ProfileLayout() {
   }
   async function handleSubmit(e) {
     e.preventDefault()
+    setSubmitDisabled(true)
     if (imageUpload !== undefined) {
       const imageRef = ref(storage, `profilePictures/${user.userId}`)
       // check for if user has a previous profile picture, if so remove it and we set a new one with the new imageUpload
@@ -50,6 +52,7 @@ export default function ProfileLayout() {
       await updateDoc(doc(db, "users", user.userId), {
         ...user, ...profilePopUpData
     })}
+    setSubmitDisabled(false)
     setIsProfilePopUpVisible(false)
   }
   const follow = async () => {
@@ -101,7 +104,7 @@ export default function ProfileLayout() {
                 <input type="text" id='edit--description' value={profilePopUpData?.description} name='description' onChange={handleChange} maxLength="250" placeholder='Description'/>
                 <label htmlFor="edit--pfp">Profile Picture:</label>
                 <input type="file" id='edit--pfp' className='pointer' onChange={handleProfilePictureChange}/>
-                <button className='cta'>Save Changes</button>
+                <button className='cta' disabled={submitDisabled ? true : false}>{submitDisabled ? "Saving Changes..." : "Save Changes"}</button>
               </form>
             </section>
           }
