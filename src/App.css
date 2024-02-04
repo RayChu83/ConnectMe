@@ -27,7 +27,7 @@ a{
   transition: 0.2s ease-in-out;
 }
 .text--cta{
-  color: #493aac;
+  color: #1f0e8b;
   font-weight: 500;
 }
 .expand{
@@ -49,6 +49,12 @@ a{
 }
 .danger--text{
   color: rgb(149, 52, 52);
+}
+.green--text{
+  color: rgb(52, 149, 79);
+}
+.text--right{
+  text-align: right;
 }
 .danger--btn{
   background: rgb(149, 52, 52);
@@ -82,4 +88,7 @@ a{
   background: none;
   border: none;
   outline: none;
+}
+.top--padding{
+  padding-top: 20px;
 }

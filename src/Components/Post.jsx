@@ -55,9 +55,9 @@ export default function Post(props) {
           <section className="post--interactions">
             {props.likes?.includes(loggedInUser?.userId) 
               ? 
-                <button className='unstyled--btn pointer liked' onClick={unlike}><i className="fa-solid fa-heart liked"></i> {props.likes?.length}</button> 
+                <button className='unstyled--btn pointer liked' onClick={unlike}><i className="fa-solid fa-heart liked"></i> {props.likes?.length || 0} Like{props.likes?.length !== 1 && "s"}</button> 
               : 
-                <button className='unstyled--btn pointer understated' onClick={like}><i className="fa-solid fa-heart understated"></i> {props.likes?.length}</button>
+                <button className='unstyled--btn pointer understated' onClick={like}><i className="fa-solid fa-heart understated"></i> {props.likes?.length || 0} Like{props.likes?.length !== 1 && "s"}</button>
             }
             <Link to={`/post/${props.postId}`}><small className='text--cta pointer'>View Details</small></Link>
           </section>

@@ -92,10 +92,10 @@ export default function HomeSectionTwo() {
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
           <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
-          <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange} maxLength="1000"></input>
+          <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange} maxLength="750"></input>
           <button type="submit" className="cta" disabled={!newPostContent && true}>Post</button>
         </form>
-        <small className='understated'>{newPostContent.length}/1000</small>
+        <small className='understated'>{newPostContent.length}/750</small>
           {displayedPosts ? displayedPosts.map((post, index) => (
             <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} key={index}/>
           )) : <p className='understated text--center'>Loading...</p>}

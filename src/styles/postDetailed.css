@@ -1,0 +1,6 @@
+#post--detail--container{
+  background-color: #16161e;
+  border-radius: 20px;
+  padding: 10px 20px;
+  transition: filter 0.3s;
+}

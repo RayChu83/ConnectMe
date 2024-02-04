@@ -16,6 +16,7 @@ import './App.css';
 import ProfileLayout from './Layouts/ProfileLayout';
 import ProfileFollowing from './Components/ProfileFollowing';
 import ProfileFollowers from './Components/ProfileFollowers';
+import PostDetailed from './Components/PostDetailed';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                 </Route>
               </Route>
               <Route path='about' element={<About />}/>
+              <Route path='post/:id' element={<PostDetailed />}/>
             </Route>
             <Route element={<LoggedOutProtectedLayout />}>
               <Route path='login' element={<Login />}/>

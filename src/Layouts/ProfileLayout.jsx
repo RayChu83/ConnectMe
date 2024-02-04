@@ -82,7 +82,11 @@ export default function ProfileLayout() {
   useEffect(() => {
     async function fetchUserData() {
       const res = await fetchUserById(userId)
-      setUser(res)
+      if (res) {
+        setUser(res)
+      }else {
+        setUser(undefined)
+      }
     }
     fetchUserData()
   }, [userId])
@@ -120,9 +124,14 @@ export default function ProfileLayout() {
             </div>
             <p className={!user.description ? "understated" : null}>{user.description || "No description found..."}</p>
             {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}
-            <p className='user--following--followers'><NavLink to="following" className='heading pointer'>{[...new Set(user.following)].length} Following</NavLink><NavLink to="followers" className='heading pointer'>{[...new Set(user.followers)].length} Followers</NavLink></p>
+            <p className='user--following--followers'><NavLink to="following" className='heading pointer'>{[...new Set(user.following)].length} Following</NavLink><NavLink to="followers" className='heading pointer'>{[...new Set(user.followers)].length} Follower{[...new Set(user.followers)].length !== 1 && "s"}</NavLink></p>
             <Outlet/>
           </main>
-        </>  : <p className='understated text--center'>Loading...</p>
+        </>  : 
+        user === undefined ? 
+          <>
+            <p className='understated text--center top--padding'>No user found, <Link to="/" className='text--cta'>return home</Link></p>
+          </> 
+        : <p className='understated text--center top--padding'>Loading...</p>
   )
 }
