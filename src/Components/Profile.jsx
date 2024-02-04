@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 import Post from './Post'
 import "../styles/user.css"
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 
 export default function Profile() {
@@ -50,7 +50,7 @@ export default function Profile() {
             .map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} key={index} />) 
         : 
         // default value has a empty array, if fetched and still empty, state changes to null
-          usersPosts?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
+          usersPosts?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>{loggedInUser?.userId === userId ? <>No posts made,<Link to="/" className='text--cta'> Create posts here</Link></> : "No posts made..."}</p>
       }
       {usersPosts?.length > 3 && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
       {loggedInUser?.userId === userId && <button onClick={signUserOut} className='danger--btn'>Sign Out</button>}

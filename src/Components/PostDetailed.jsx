@@ -31,7 +31,7 @@ export default function PostDetailed() {
   const editPost = async () => {
     // additional check to make sure that the poster owns the actual post and confirms the action
     if (loggedInUser.userId === post.creator ) {
-      const editedPost = window.prompt("Are you sure you would like to confirm these changes?", post.content)
+      const editedPost = window.prompt("Are you sure you would like to confirm these changes?", post.content)?.substring(0, 750)
       // make sure there actually were any changes
       if (editedPost && editedPost !== post.content) {
         await updateDoc(doc(db, "posts", postId), {
