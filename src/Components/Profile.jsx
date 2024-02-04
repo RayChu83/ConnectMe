@@ -28,7 +28,11 @@ export default function Profile() {
         let posts = snapshot.docs.map(doc => ({
           ...doc.data()
         }))
-        setUsersPosts(posts)
+        if (posts.length === 0) {
+          setUsersPosts(null)
+        }else {
+          setUsersPosts(posts)
+        }
       },
       (error) => {
         console.error(error)
@@ -48,7 +52,7 @@ export default function Profile() {
         // default value has a empty array, if fetched and still empty, state changes to null
           usersPosts?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
       }
-      {usersPosts.length > 3 && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
+      {usersPosts?.length > 3 && <p className='understated pointer limit--posts' onClick={toggleShowAllPosts}>{isShowingAll ? "Show Less" : "Show All"}</p>}
       {loggedInUser?.userId === userId && <button onClick={signUserOut} className='danger--btn'>Sign Out</button>}
     </>
   )

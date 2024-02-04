@@ -17,7 +17,11 @@ export default function HomeSectionThree() {
         let posts = snapshot.docs.map(doc => ({
           ...doc.data()
         }))
-        setLoggedInUsersPost(posts.slice(0, 2))
+        if (posts.length === 0) {
+          setLoggedInUsersPost(null)
+        }else {
+          setLoggedInUsersPost(posts.slice(0, 2))
+        }
       },
       (error) => {
         console.error(error)
