@@ -77,3 +77,8 @@ a{
 .blurred{
   filter: blur(4px);
 }
+.unstyled--btn{
+  background: none;
+  border: none;
+  outline: none;
+}

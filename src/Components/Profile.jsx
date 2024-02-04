@@ -37,7 +37,7 @@ export default function Profile() {
         ? 
           usersPosts
             .slice(!isShowingAll ? 0: undefined, isShowingAll ? undefined : 2)
-            .map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} key={index} />) 
+            .map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} key={index} />) 
         : 
         // default value has a empty array, if fetched and still empty, state changes to null
           usersPosts?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>No posts made...</p>
