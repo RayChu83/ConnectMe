@@ -60,7 +60,7 @@ export default function Login() {
         <input name='password' onChange={updateFormData} value={formData.password} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' required autoComplete='true'/>
         <small className='understated pointer' onClick={changePasswordVisibility}>{isPasswordShown ? "Hide Password" : "Show Password"}</small>
         <button className='auth--btn google--account--access' type='button' onClick={googleLogin}><img src={Google} alt="Google Logo" height="16"/>Login With Google</button>
-        <button className='auth--btn demo--access' onClick={demo} type='submit'>Try With Demo</button>
+        <button className='auth--btn demo--access' onClick={demo} type='submit'><i class="fa-regular fa-clock"></i> Try With Demo</button>
         <button className='cta expand'>Login</button>
       </form>
       <small>Don't have an account, <strong><Link to="/register" replace>Register</Link></strong></small>
