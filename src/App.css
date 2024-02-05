@@ -95,6 +95,6 @@ a{
 .top--padding{
   padding-top: 20px;
 }
-.normal--fontsize{
-  font-size: 1em;
+.smaller--fontsize{
+  font-size: .9em;
 }

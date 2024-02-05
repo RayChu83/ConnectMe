@@ -87,8 +87,8 @@ export default function PostDetailed() {
                 </Link>
                 {loggedInUser.userId === post.creator && 
                 <article>
-                  <button className='unstyled--btn pointer normal--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square green--text"></i></button>
-                  <button className='unstyled--btn pointer normal--fontsize' onClick={removePost}><i className="fa-solid fa-trash danger--text"></i></button>
+                  <button className='unstyled--btn pointer smaller--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square green--text"></i></button>
+                  <button className='unstyled--btn pointer smaller--fontsize' onClick={removePost}><i className="fa-solid fa-trash danger--text"></i></button>
                 </article>}  
               </div>
               <small className="understated">
@@ -100,9 +100,9 @@ export default function PostDetailed() {
               <section className="post--interactions">
                 {post.likes?.includes(loggedInUser?.userId) 
                 ? 
-                  <button className='unstyled--btn pointer liked normal--fontsize no-padding' onClick={unlike}><i class="fa-solid fa-thumbs-up liked"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button> 
+                  <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i class="fa-solid fa-thumbs-up liked"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button> 
                 : 
-                  <button className='unstyled--btn pointer understated normal--fontsize no-padding' onClick={like}><i class="fa-solid fa-thumbs-up understated"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button>
+                  <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i class="fa-solid fa-thumbs-up understated"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button>
                 }
               </section>
             </article>
