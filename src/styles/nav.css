@@ -8,12 +8,15 @@ nav{
   align-items: center;
   filter: drop-shadow(0 3px 5px #121218)
 }
+#nav--firstrow{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
 .nav--bars{
   font-size: 1.3em;
   cursor: pointer;
-  position: absolute;
-  top: 2rem;
-  right: 20px;
 }
 nav img{
   height: 80px;

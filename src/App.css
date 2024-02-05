@@ -28,7 +28,7 @@ a{
 }
 .text--cta{
   color: #8279bd;
-  font-weight: 600 ;
+  font-weight: 500;
 }
 .expand{
   width: 100%;
@@ -89,6 +89,12 @@ a{
   border: none;
   outline: none;
 }
+.no-padding{
+  padding: 0;
+}
 .top--padding{
   padding-top: 20px;
+}
+.normal--fontsize{
+  font-size: 1em;
 }

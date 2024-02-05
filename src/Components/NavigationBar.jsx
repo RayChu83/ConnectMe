@@ -22,10 +22,12 @@ export default function NavigationBar() {
   }
   return (
     <nav>
-      <Link to="/" id='nav--logo'>
-        <img src={navLogo} alt="ConnectMe Logo"></img>
-      </Link>
-      <i className="fa-solid fa-bars nav--bars" style={{display: "none"}} onClick={toggleNavDropdown}></i>
+      <section id='nav--firstrow'>
+        <Link to="/" id='nav--logo'>
+          <img src={navLogo} alt="ConnectMe Logo"></img>
+        </Link>
+        <i className="fa-solid fa-bars nav--bars" style={{display: "none"}} onClick={toggleNavDropdown}></i>
+      </section>
       <ul style={navDropdown ? {display: "flex"} : null}>
         <li onClick={hideDropdown}><NavLink to="/"><i className="fa-solid fa-house understated"></i></NavLink></li>
         <li onClick={hideDropdown}><NavLink to="/about"><i className="fa-solid fa-circle-info understated"></i></NavLink></li>
