@@ -28,9 +28,16 @@ main .section:hover, .search--bar:hover{
   margin: 15px 0;
   background-color: #20212f;
   border-radius: 12px;
+}
+#user--preview article{
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+}
+#user--preview article a{
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 

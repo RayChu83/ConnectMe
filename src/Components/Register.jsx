@@ -62,7 +62,7 @@ export default function Register() {
   return (
     <section>
       <h1>Register and Join us<br /> today.</h1>
-      <p className='understated danger--text'>{error && `* ${error}`}</p>
+      <p className='danger--text'>{error && `* ${error}`}</p>
       <form className='account--access--forms' onSubmit={handleSubmit}>
         <label htmlFor="login--username">Username:</label>
         <input name='username' onChange={updateFormData} value={formData.username} type="text" placeholder='Username (Max 20 Characters)' id='login--username' maxLength="20" minLength="3" required autoComplete='true'/>

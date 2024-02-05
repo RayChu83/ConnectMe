@@ -10,7 +10,7 @@ export default function HomeSectionOne() {
   return (
     <aside id="section--one" className="section">
       <h3 className="heading">You're Following...</h3>
-      {following?.length ? following.map(id => <UserPreview id={id}/>) : <p className='understated text--center'>You are not following anyone...</p>}
+      {following?.length ? following.slice(0, 3).map(id => <UserPreview id={id} key={id}/>) : <p className='understated text--center'>You are not following anyone...</p>}
       <Link to={`/user/${loggedInUser?.userId}/following`}>
         <button className="cta expand">See All</button> 
       </Link>

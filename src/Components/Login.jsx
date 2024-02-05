@@ -52,7 +52,7 @@ export default function Login() {
   return (
     <section>
       <h1>Log In to an existing <br /> account.</h1>
-      <p className='understated danger--text'>{error && `* ${error}`}</p>
+      <p className='danger--text'>{error && `* ${error}`}</p>
       <form className='account--access--forms' onSubmit={handleSubmit}>
         <label htmlFor="login--email">Email Address:</label>
         <input name='email' onChange={updateFormData} value={formData.email} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>

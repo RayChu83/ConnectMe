@@ -9,7 +9,7 @@ export default function About() {
       <img src={logoSharpened} alt="ConnectMe Logo"></img>
       <article>
           <h1 className='overstated'>Who we are...</h1>
-          <p><strong>ConnectMe</strong> is a Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, et voluptatum at quos officiis adipisci placeat voluptatem vel doloribus consectetur maxime, architecto magni esse? Veniam!</p>
+          <p><strong>ConnectMe</strong> is a online social network where users can create and interact with posts, adjust profiles, connect with others by following & more. Our beloved developer Ray Chu took ConnectMe from a concept to completion, overseeing every aspect of its development. </p>
       </article>
     </main>
   )
