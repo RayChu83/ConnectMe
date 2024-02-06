@@ -7,15 +7,19 @@
 }
 #post--detail--container > section, #post--detail--container > aside{
   background-color: #16161e;
-  padding: 20px;
+  padding: 25px;
   border-radius: 20px;
   height: fit-content;
+  transition: 0.2s ease-in-out;
+}
+#post--detail--container > section:hover, #post--detail--container > aside:hover{
+  filter: drop-shadow(0 3px 5px #121218);
 }
 #post--detail--container > aside{
   position: sticky;
   top: 70px;
 }
-@media (max-width: 750px) {
+@media (max-width: 800px) {
   #post--detail--container{
     display: block;
   }

@@ -3,7 +3,7 @@ main .section{
   width: 100%;
   height: fit-content;
   border-radius: 12px;
-  padding: 20px;
+  padding: 25px;
   transition: .2s ease-in-out;
 }
 main .section:hover, .search--bar:hover{
@@ -163,7 +163,7 @@ main .section:hover, .search--bar:hover{
       grid-template-columns: 2fr 1.25fr;
   }
 }
-@media (max-width: 750px) {
+@media (max-width: 800px) {
   #section--three{
       display: none;
   }

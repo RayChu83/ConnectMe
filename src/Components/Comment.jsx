@@ -9,7 +9,7 @@ export default function Comment() {
       <div className="comment--details" style={{flexDirection : "unset", alignItems : "center"}}>
         <Link to={`/user/`}>
           <div className="user--details">
-            <img className="profile--img" src={profileImageLoading}></img>
+            <img className="profile--img" src={profileImageLoading} alt='Profile'></img>
             <h3>Lorem Ipsum</h3>
           </div>
         </Link>
