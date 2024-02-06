@@ -4,9 +4,8 @@ import { Outlet, Link, NavLink, useParams } from 'react-router-dom'
 
 import profileImageLoading from "../Images/loadingProfile.jpg"
 import { db, storage } from '../Firebase/firebase'
-import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import { deleteObject, getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage'
-import fetchUserById from '../fetchUserById'
 
 export default function ProfileLayout() {
   const userId = useParams()?.id
@@ -62,7 +61,6 @@ export default function ProfileLayout() {
     await updateDoc(doc(db, "users", userId), {
       followers : arrayUnion(loggedInUser.userId)
     })
-    window.location.reload()
   }
   const unfollow = async () => {
     await updateDoc(doc(db, "users", loggedInUser.userId), {
@@ -71,7 +69,6 @@ export default function ProfileLayout() {
     await updateDoc(doc(db, "users", userId), {
       followers : arrayRemove(loggedInUser.userId)
     })
-    window.location.reload()
   }
   useEffect(() => {
     if (user?.username || user?.email || user?.description) {
@@ -80,15 +77,18 @@ export default function ProfileLayout() {
   }, [user])
 
   useEffect(() => {
-    async function fetchUserData() {
-      const res = await fetchUserById(userId)
-      if (res) {
-        setUser(res)
-      }else {
-        setUser(undefined)
-      }
+    if (userId) {
+      const unsubscribe = onSnapshot(doc(db, "users", userId), (doc) => {
+        if (doc.exists()) {
+          setUser(doc.data())
+        }
+        else {
+          setUser(undefined)
+        }
+      })
+      return unsubscribe
     }
-    fetchUserData()
+    // eslint-disable-next-line 
   }, [userId])
   return (
     user ? 
@@ -120,7 +120,7 @@ export default function ProfileLayout() {
                   <h1 className='overstated'>{user.username || "Anonymous"}</h1>
                 </article>
               </Link>
-              {loggedInUser?.userId === user?.userId ? <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big> : user?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}>Unfollow</button> : <button className='cta' onClick={follow}>Follow</button>}
+              {loggedInUser?.userId === user?.userId ? <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big> : user?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}><i class="fa-solid fa-user-minus"></i> Unfollow</button> : <button className='cta' onClick={follow}><i class="fa-solid fa-user-plus"></i> Follow</button>}
             </div>
             <p className={!user.description ? "understated" : null}>{user.description || "No description found..."}</p>
             {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}

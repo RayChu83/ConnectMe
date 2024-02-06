@@ -59,7 +59,7 @@ export default function Post(props) {
               : 
                 <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i className="fa-solid fa-thumbs-up understated"></i> {props.likes?.length || 0} Like{props.likes?.length !== 1 && "s"}</button>
             }
-            <Link to={`/post/${props.postId}`}><small className='understated pointer smaller--fontsize'>More Details</small></Link>
+            <Link to={`/post/${props.postId}`}><small className='understated pointer smaller--fontsize'>See Details</small></Link>
           </section>
       </article>
     </>

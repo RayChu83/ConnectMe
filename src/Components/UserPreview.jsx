@@ -51,7 +51,7 @@ export default function UserPreview(props) {
               <p className="username">@{userDetails?.username}</p>
             </Link>
             {/* checks for following status and also if potentially you are that user your viewing */}
-            {userDetails?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}>Unfollow</button> : userDetails?.userId !== loggedInUser?.userId && <button className='cta' onClick={follow}>Follow</button>}
+            {userDetails?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}><i className="fa-solid fa-user-minus"></i> Unfollow</button> : userDetails?.userId !== loggedInUser?.userId && <button className='cta' onClick={follow}><i className="fa-solid fa-user-plus"></i> Follow</button>}
           </article>
           <small className='understated'>{userDetails?.description?.substring(0, 50) || "No description found..."}</small>
         </section>
