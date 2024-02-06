@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux'
 
 import profileImageLoading from "../Images/loadingProfile.jpg"
 import "../styles/postDetailed.css"
+import Comment from './Comment'
+import UserDetails from './UserDetails'
 
 export default function PostDetailed() {
   const postId = useParams().id
@@ -16,7 +18,7 @@ export default function PostDetailed() {
 
   const convertDate = (timestamp) => {
     let dateObject = timestamp.toDate()
-    return `${dateObject.getMonth() + 1} / ${dateObject.getDate()} / ${dateObject.getFullYear()}`
+    return `${dateObject.getMonth() + 1} / ${dateObject.getDate()} / ${dateObject.getFullYear()} • ${dateObject.getHours()} : ${dateObject.getMinutes() < 10 ? "0" + dateObject.getMinutes() : dateObject.getMinutes()} ${dateObject.getHours() < 12 ? "am" : "pm"} `
   }
   const like = async () => {
     await updateDoc(doc(db, "posts", postId), {
@@ -77,36 +79,57 @@ export default function PostDetailed() {
         {post 
         ? 
           <>
-            <article className="post" style={{maxHeight: "unset"}}>
-              <div className="post--details" style={{flexDirection : "unset", alignItems : "center"}}>
-                <Link to={`/user/${post.creator}`}>
-                  <div className="user--details">
-                  <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} alt={creatorDetails?.username}></img>
-                  <h3>{creatorDetails?.username}</h3>
-                  </div>
-                </Link>
-                {loggedInUser.userId === post.creator && 
-                <article>
-                  <button className='unstyled--btn pointer smaller--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square green--text"></i></button>
-                  <button className='unstyled--btn pointer smaller--fontsize' onClick={removePost}><i className="fa-solid fa-trash danger--text"></i></button>
-                </article>}  
-              </div>
-              <small className="understated">
-                {convertDate(post.created)}
-              </small>
-              <section className="post-content">
-              <p>{post.content}</p>
+            <section>
+              <section id="post--comments">
+                <form className="post--comments--form">
+                  <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
+                  <input type="text" placeholder="Comment..." maxLength="250"></input>
+                  <button type="submit" className="cta">Reply</button>
+                </form>
+                <div className='comments--container'></div>
               </section>
-              <section className="post--interactions">
-                {post.likes?.includes(loggedInUser?.userId) 
-                ? 
+              <hr />
+              <small className='understated'>0/250</small>
+              <article className="post" style={{maxHeight: "unset"}}>
+                <div className="post--details" style={{flexDirection : "unset", alignItems : "center"}}>
+                  <Link to={`/user/${post.creator}`}>
+                    <div className="user--details">
+                    <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} alt={creatorDetails?.username}></img>
+                    <h3>{creatorDetails?.username}</h3>
+                    </div>
+                  </Link>
+                  {loggedInUser.userId === post.creator && 
+                  <article>
+                    <button className='unstyled--btn pointer smaller--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square green--text"></i></button>
+                    <button className='unstyled--btn pointer smaller--fontsize' onClick={removePost}><i className="fa-solid fa-trash danger--text"></i></button>
+                  </article>}  
+                </div>
+                <small className="understated">
+                  {convertDate(post.created)}
+                </small>
+                <section className="post-content">
+                  <p className='bottom--margin--zero'>{post.content}</p>
+                </section>
+                <section className="post--interactions">
+                  {post.likes?.includes(loggedInUser?.userId) 
+                  ? 
                   <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i class="fa-solid fa-thumbs-up liked"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button> 
-                : 
+                  : 
                   <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i class="fa-solid fa-thumbs-up understated"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button>
                 }
+                </section>
+              </article>
+              <h3>Comments (3):</h3>
+              {/* <p className='text--center understated'>Visible comments will appear here</p> */}
+              <section id="comments--container">
+                <Comment />
+                <Comment />
+                <Comment />
+              <p className='text--center understated pointer'>Show All</p>
               </section>
-            </article>
-          </> 
+            </section> 
+            <UserDetails/>
+          </>
         : 
           post === null ? <p className='understated text--center top--padding'>Loading...</p> : <p className='understated text--center top--padding'>No post found, <Link className='text--cta'>return home</Link></p>
         }

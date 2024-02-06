@@ -50,7 +50,7 @@ export default function Post(props) {
           </small>
         </div>
         <section className="post-content">
-          <small>{props.content}</small>
+          <small className='bottom--margin--zero'>{props.content}</small>
         </section>
           <section className="post--interactions">
             {props.likes?.includes(loggedInUser?.userId) 

@@ -1,6 +1,25 @@
 #post--detail--container{
-  background-color: #16161e;
+  display: grid;
+  grid-template-columns: 2fr 1.25fr;
+  column-gap: 20px;
   border-radius: 20px;
-  padding: 10px 20px;
   transition: filter 0.3s;
+}
+#post--detail--container > section, #post--detail--container > aside{
+  background-color: #16161e;
+  padding: 20px;
+  border-radius: 20px;
+  height: fit-content;
+}
+#post--detail--container > aside{
+  position: sticky;
+  top: 70px;
+}
+@media (max-width: 750px) {
+  #post--detail--container{
+    display: block;
+  }
+  #post--detail--container > aside{
+    display: none;
+  }
 }

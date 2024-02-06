@@ -20,7 +20,7 @@ export default function HomeSectionThree() {
         if (posts.length === 0) {
           setLoggedInUsersPost(null)
         }else {
-          setLoggedInUsersPost(posts.slice(0, 2))
+          setLoggedInUsersPost(posts.slice(0, 1))
         }
       },
       (error) => {
@@ -33,8 +33,9 @@ export default function HomeSectionThree() {
     <aside id="section--three" className="section">
       <Link to={`/user/${loggedInUser?.userId}`}>
         <section id="profile">
-            <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="ConnectMe Logo" width="125" height="125"></img>
+          <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="Users Logo" width="125" height="125"></img>
           <h2>{loggedInUser?.username || "-----"}</h2>
+          <small className='understated'>{loggedInUser?.description}</small>
         </section>
       </Link>
       <article>
@@ -43,7 +44,7 @@ export default function HomeSectionThree() {
             loggedInUsersPost.map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} key={index} />) 
           : 
             // default value has a empty array, if fetched and still empty, state changes to null
-            loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>Visible posts will be here!</p>
+            loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>Visible posts will appear here!</p>
         }
       </article>
       <Link to={`/user/${loggedInUser?.userId}`}>

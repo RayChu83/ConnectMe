@@ -95,6 +95,7 @@ export default function HomeSectionTwo() {
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange} maxLength="750"></input>
           <button type="submit" className="cta" disabled={!newPostContent && true}>Post</button>
         </form>
+        <hr />
         <small className='understated'>{newPostContent.length}/750</small>
           {displayedPosts ? displayedPosts.map((post, index) => (
             <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} key={index}/>
