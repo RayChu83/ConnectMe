@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { arrayRemove, arrayUnion, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, deleteDoc, doc, getDoc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../Firebase/firebase'
 import { useSelector } from 'react-redux'
 
@@ -8,10 +8,13 @@ import profileImageLoading from "../Images/loadingProfile.jpg"
 import "../styles/postDetailed.css"
 import Comment from './Comment'
 import UserDetails from './UserDetails'
+import { v4 } from 'uuid'
 
 export default function PostDetailed() {
   const postId = useParams().id
   const [post, setPost] = useState(null)
+  const [newComment, setNewComment] = useState("")
+  const [comments, setComments] = useState([])
   const loggedInUser = useSelector(state => state.loggedInUser)
   const [creatorDetails, setCreatorDetails] = useState(null)
   const navigate = useNavigate()
@@ -49,12 +52,30 @@ export default function PostDetailed() {
       navigate(-1)
     }
   }
+  const handleNewComment = async (e) => {
+    e.preventDefault()
+    const newCommentId = v4()
+    // create new comment and link the comment with the post
+    await setDoc(doc(db, "comments", newCommentId), {
+      created : new Date(),
+      content : newComment,
+      id : newCommentId,
+      userId : loggedInUser.userId
+    })
+    await updateDoc(doc(db, "posts", postId), {
+      comments : arrayUnion(newCommentId)
+    })
+    setNewComment("")
+  }
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "posts", postId), (doc) => {
       if (doc.exists()) {
         setPost(doc.data())
+        // set the posts comments with the array of ids pointing to the comments collection
+        setComments([...doc.data().comments])
       }else {
         setPost(undefined)
+        setComments([])
       }
     })
     return unsubscribe
@@ -81,16 +102,16 @@ export default function PostDetailed() {
           <>
             <section>
               <section id="post--comments">
-                <form className="post--comments--form">
+                <form className="post--comments--form" onSubmit={handleNewComment}>
                   <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
-                  <input type="text" placeholder="Comment..." maxLength="250"></input>
-                  <button type="submit" className="cta">Reply</button>
+                  <input type="text" placeholder="Comment..." maxLength="250" value={newComment} onChange={(e) => {setNewComment(e.target.value)}}></input>
+                  <button type="submit" className="cta" disabled={!newComment && true}>Reply</button>
                 </form>
                 <div className='comments--container'></div>
               </section>
               <hr />
               <small className='understated'>0/250</small>
-              <article className="post" style={{maxHeight: "unset"}}>
+              <article className="post" style={{maxHeight: "unset"}} onDoubleClick={like}>
                 <div className="post--details" style={{flexDirection : "unset", alignItems : "center"}}>
                   <Link to={`/user/${post.creator}`}>
                     <div className="user--details">
@@ -113,19 +134,19 @@ export default function PostDetailed() {
                 <section className="post--interactions">
                   {post.likes?.includes(loggedInUser?.userId) 
                   ? 
-                  <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i class="fa-solid fa-thumbs-up liked"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button> 
+                  <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i className="fa-solid fa-thumbs-up liked"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button> 
                   : 
-                  <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i class="fa-solid fa-thumbs-up understated"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button>
+                  <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i className="fa-solid fa-thumbs-up understated"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button>
                 }
                 </section>
               </article>
-              <h3>Comments (3):</h3>
-              {/* <p className='text--center understated'>Visible comments will appear here</p> */}
+              <h3>Comments ({comments?.length}):</h3>
               <section id="comments--container">
-                <Comment />
-                <Comment />
-                <Comment />
-              <p className='text--center understated pointer'>Show All</p>
+                {/* reversing the order since we push new comments so the most recent is the last item in the array */}
+                {comments.reverse().map((comment) => <Comment key={comment} commentId={comment}/>)}
+              
+              {/* <p className='text--center understated pointer'>Show All</p> */}
+              {comments?.length === 0 && <p className='text--center understated'>Visible comments will appear here</p>}
               </section>
             </section> 
             <UserDetails/>

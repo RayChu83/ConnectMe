@@ -15,7 +15,7 @@ export default function UserDetails() {
       </Link>
       <article>
         {/* instead of comments it will be posts below */}
-        <Comment/>
+        {/* <Comment/> */}
       </article>
       <Link to={`/user/`}>
         <button className="cta expand">View All</button>  

@@ -37,7 +37,7 @@ export default function Post(props) {
   }, [props.creator])
   return (
     <>
-      <article className="post">
+      <article className="post" onDoubleClick={like}>
         <div className="post--details">
           <Link to={`/user/${props.creator}`}>
             <div className="user--details">

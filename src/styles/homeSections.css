@@ -71,7 +71,6 @@ main .section:hover, .search--bar:hover{
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
 }
 .post--form input, .post--comments--form input{
   height: 40px;
