@@ -149,7 +149,7 @@ export default function PostDetailed() {
               {comments?.length === 0 && <p className='text--center understated'>Visible comments will appear here</p>}
               </section>
             </section> 
-            <UserDetails/>
+            <UserDetails id={post.creator}/>
           </>
         : 
           post === null ? <p className='understated text--center top--padding'>Loading...</p> : <p className='understated text--center top--padding'>No post found, <Link className='text--cta'>return home</Link></p>
