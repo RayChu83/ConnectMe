@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import profileImageLoading from "../Images/loadingProfile.jpg"
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../Firebase/firebase'
 import fetchUserById from '../fetchUserById'
 
@@ -16,17 +16,19 @@ export default function Comment(props) {
   }
 
   useEffect(() => {
-    async function fetchComment() {
-      const docSnap = await getDoc(doc(db, "comments", props.commentId))
-      if (docSnap.exists()) {
-        setComment(docSnap.data())
-        const res = await fetchUserById(docSnap.data().userId)
-        setCreatorDetails(res)
+      const unsubscribe = onSnapshot(doc(db, "comments", props.commentId), (doc) => {
+      if (doc.exists()) {
+        setComment(doc.data())
+        async function fetchUserData() {
+          const res = await fetchUserById(doc.data().userId)
+          setCreatorDetails(res)
+        }
+        fetchUserData()
       }else {
         setComment({})
       }
-    }
-    fetchComment()
+    })
+    return unsubscribe
   }, [props.commentId])
   return (
     <>

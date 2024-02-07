@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Post from './Post'
 import profileImageLoading from "../Images/loadingProfile.jpg"
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { collection, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 
 export default function HomeSectionThree() {
@@ -12,19 +12,16 @@ export default function HomeSectionThree() {
   const [loggedInUsersPost, setLoggedInUsersPost] = useState([])
   useEffect(() => {
     if (loggedInUser?.userId) {
-      const q = query(collection(db, "posts"), orderBy("created", "desc"), where("creator", "==", loggedInUser.userId))
+      const q = query(collection(db, "posts"), orderBy("created", "desc"), where("creator", "==", loggedInUser.userId), limit(1))
       const unsubscribe = onSnapshot(q, (snapshot) => {
         let posts = snapshot.docs.map(doc => ({
           ...doc.data()
         }))
-        if (posts.length === 0) {
+        if (!posts.length) {
           setLoggedInUsersPost(null)
         }else {
-          setLoggedInUsersPost(posts.slice(0, 1))
+          setLoggedInUsersPost(posts)
         }
-      },
-      (error) => {
-        console.error(error)
       });
     return unsubscribe
     }

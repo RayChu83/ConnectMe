@@ -95,11 +95,9 @@ export default function PostDetailed() {
     }
     // eslint-disable-next-line
   }, [post?.creator])
-  return (
-    <main id='post--detail--container'>
-        {post 
-        ? 
-          <>
+  return ( 
+        post ? 
+          <main id='post--detail--container'>
             <section>
               <section id="post--comments">
                 <form className="post--comments--form" onSubmit={handleNewComment}>
@@ -150,10 +148,8 @@ export default function PostDetailed() {
               </section>
             </section> 
             <UserDetails id={post.creator}/>
-          </>
+          </main>
         : 
           post === null ? <p className='understated text--center top--padding'>Loading...</p> : <p className='understated text--center top--padding'>No post found, <Link className='text--cta'>return home</Link></p>
-        }
-    </main>
   )
 }
