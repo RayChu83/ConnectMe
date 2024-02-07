@@ -143,7 +143,7 @@ export default function PostDetailed() {
               <h3>Comments ({comments?.length}):</h3>
               <section id="comments--container">
                 {/* reversing the order since we push new comments so the most recent is the last item in the array */}
-                {comments.reverse().map((comment) => <Comment key={comment} commentId={comment}/>)}
+                {[...comments].reverse().map((comment) => <Comment key={comment} commentId={comment}/>)}
               
               {/* <p className='text--center understated pointer'>Show All</p> */}
               {comments?.length === 0 && <p className='text--center understated'>Visible comments will appear here</p>}
