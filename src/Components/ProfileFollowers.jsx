@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import UserPreview from './UserPreview'
 import { useParams, Link } from 'react-router-dom'
-import fetchUserById from '../fetchUserById'
 import { useSelector } from 'react-redux'
+import { doc, onSnapshot } from 'firebase/firestore'
+import { db } from '../Firebase/firebase'
 
 export default function ProfileFollowers() {
   const userId = useParams().id
@@ -15,11 +16,12 @@ export default function ProfileFollowers() {
     setIsShowingAll(prevState => !prevState)
   }
   useEffect(() => {
-    async function fetchUsersFollowers() {
-      const res = await fetchUserById(userId)
-      setUsersFollowers([...new Set(res.followers)])
-    }
-    fetchUsersFollowers()
+    const unsubscribe = onSnapshot(doc(db, "users", userId), (doc) => {
+      if (doc.exists()) {
+        setUsersFollowers([...new Set(doc.data().followers)])
+      }
+    })
+    return unsubscribe
   }, [userId])
   return (
     <>

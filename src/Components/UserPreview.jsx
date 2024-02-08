@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import profileLoadingImage from "../Images/loadingProfile.jpg"
-import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import { db } from '../Firebase/firebase'
 import { useSelector } from 'react-redux'
 
@@ -17,7 +17,6 @@ export default function UserPreview(props) {
     await updateDoc(doc(db, "users", userDetails.userId), {
       followers : arrayUnion(loggedInUser.userId)
     })
-    window.location.reload()
   }
   const unfollow = async () => {
     await updateDoc(doc(db, "users", loggedInUser.userId), {
@@ -26,21 +25,19 @@ export default function UserPreview(props) {
     await updateDoc(doc(db, "users", userDetails.userId), {
       followers : arrayRemove(loggedInUser.userId)
     })
-    window.location.reload()
   }
 
   useEffect(() => {
-    async function fetchUserDataById() {
-      const userSnap = await getDoc(doc(db, "users", props.id))
-      if (userSnap.exists()) {
-        setUserDetails(userSnap.data())
+    const unsubscribe = onSnapshot(doc(db, "users", props.id), (doc) => {
+      if (doc.exists()) {
+        setUserDetails(doc.data())
       }else {
         setUserDetails({username : "Content Deleted"})
       }
-    }
-    fetchUserDataById()
+    })
+    return unsubscribe
     // eslint-disable-next-line
-  }, [])
+  }, [props.id])
   return (
     userDetails && loggedInUser && 
       (
