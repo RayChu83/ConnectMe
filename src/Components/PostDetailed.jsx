@@ -60,6 +60,7 @@ export default function PostDetailed() {
       created : new Date(),
       content : newComment,
       id : newCommentId,
+      linkedPost : postId,
       userId : loggedInUser.userId
     })
     await updateDoc(doc(db, "posts", postId), {
@@ -108,7 +109,7 @@ export default function PostDetailed() {
                 <div className='comments--container'></div>
               </section>
               <hr />
-              <small className='understated'>0/250</small>
+              <small className='understated'>{newComment.length}/250</small>
               <article className="post" style={{maxHeight: "unset"}} onDoubleClick={like}>
                 <div className="post--details" style={{flexDirection : "unset", alignItems : "center"}}>
                   <Link to={`/user/${post.creator}`}>
@@ -143,7 +144,6 @@ export default function PostDetailed() {
                 {/* reversing the order since we push new comments so the most recent is the last item in the array */}
                 {[...comments].reverse().map((comment) => <Comment key={comment} commentId={comment}/>)}
               
-              {/* <p className='text--center understated pointer'>Show All</p> */}
               {comments?.length === 0 && <p className='text--center understated'>Visible comments will appear here</p>}
               </section>
             </section> 

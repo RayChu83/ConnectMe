@@ -98,7 +98,7 @@ export default function HomeSectionTwo() {
         <hr />
         <small className='understated'>{newPostContent.length}/750</small>
           {displayedPosts ? displayedPosts.map((post, index) => (
-            <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} key={index}/>
+            <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} comments={post.comments} key={index}/>
           )) : <p className='understated text--center'>Loading...</p>}
       </div>
     </div>

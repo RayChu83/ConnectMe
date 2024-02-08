@@ -53,12 +53,15 @@ export default function Post(props) {
           <small className='bottom--margin--zero'>{props.content}</small>
         </section>
           <section className="post--interactions">
-            {props.likes?.includes(loggedInUser?.userId) 
-              ? 
-                <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i className="fa-solid fa-thumbs-up liked"></i> {props.likes?.length || 0} Like{props.likes?.length !== 1 && "s"}</button> 
-              : 
-                <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i className="fa-solid fa-thumbs-up understated"></i> {props.likes?.length || 0} Like{props.likes?.length !== 1 && "s"}</button>
-            }
+            <aside>
+              {props.likes?.includes(loggedInUser?.userId) 
+                ? 
+                  <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i className="fa-solid fa-thumbs-up liked"></i> {props.likes?.length || 0} Like{props.likes?.length !== 1 && "s"}</button> 
+                : 
+                  <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i className="fa-solid fa-thumbs-up understated"></i> {props.likes?.length || 0} Like{props.likes?.length !== 1 && "s"}</button>
+              }
+              <Link to={`/post/${props.postId}`}><button className='unstyled--btn pointer understated smaller--fontsize no-padding'><i className="fa-solid fa-comment understated"></i> {props.comments.length}</button></Link>
+            </aside>
             <Link to={`/post/${props.postId}`}><small className='understated pointer smaller--fontsize'>See Details</small></Link>
           </section>
       </article>

@@ -28,7 +28,6 @@ export default function UserDetails(props) {
     });
     return unsubscribe
   }, [props.id])
-  console.log(postCreatorsRecentPost)
   return (
     <>
       {postCreator && postCreatorsRecentPost && 
@@ -41,7 +40,7 @@ export default function UserDetails(props) {
             <small className='understated'>{postCreator.description}</small>
           </section>
           {postCreatorsRecentPost.map((post, index) => (
-            <Post postId={post.id} creator={post.creator} content={post.content} created={post.created} likes={post.likes} key={index}/>
+            <Post postId={post.id} creator={post.creator} content={post.content} created={post.created} likes={post.likes} comments={post.comments} key={index}/>
           ))}
           <Link to={`/user/${postCreator.userId}`}>
             <button className="cta expand">View All</button>  
