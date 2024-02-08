@@ -73,7 +73,7 @@ export default function PostDetailed() {
       if (doc.exists()) {
         setPost(doc.data())
         // set the posts comments with the array of ids pointing to the comments collection
-        setComments([...doc.data().comments])
+        setComments(doc.data().comments || [])
       }else {
         setPost(undefined)
         setComments([])
