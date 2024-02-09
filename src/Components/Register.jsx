@@ -71,7 +71,7 @@ export default function Register() {
         <label htmlFor="login--password">Password:</label>
         <input name='password' onChange={updateFormData} value={formData.password} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' minLength="8" required autoComplete='true'/>
         <small className='understated pointer' onClick={changePasswordVisibility}>{isPasswordShown ? "Hide Password" : "Show Password"}</small>
-        <button className='google--account--access' type='button' onClick={googleRegister}><img src={Google} alt="Google Logo" height="16"/>Register With Google</button>
+        <button className='auth--btn google--account--access' type='button' onClick={googleRegister}><img src={Google} alt="Google Logo" height="16"/>Register With Google</button>
         <button className='cta expand'>Register</button>
       </form>
       <small>Already have an existing account, <strong><Link to="/login" replace>Login</Link></strong></small>

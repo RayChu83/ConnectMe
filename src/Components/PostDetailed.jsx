@@ -61,7 +61,8 @@ export default function PostDetailed() {
       content : newComment,
       id : newCommentId,
       linkedPost : postId,
-      userId : loggedInUser.userId
+      userId : loggedInUser.userId,
+      likes : [],
     })
     await updateDoc(doc(db, "posts", postId), {
       comments : arrayUnion(newCommentId)
@@ -128,7 +129,7 @@ export default function PostDetailed() {
                   {convertDate(post.created)}
                 </small>
                 <section className="post-content">
-                  <p className='bottom--margin--zero'>{post.content}</p>
+                  <p className='bottom--margin--zero pointer'>{post.content}</p>
                 </section>
                 <section className="post--interactions">
                   {post.likes?.includes(loggedInUser?.userId) 
