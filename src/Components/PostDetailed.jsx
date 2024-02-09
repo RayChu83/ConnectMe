@@ -48,6 +48,8 @@ export default function PostDetailed() {
   const removePost = async () => {
     // additional check to make sure that the poster owns the actual post and confirms the action
     if (window.confirm("Are you sure you'd like to remove this post permanently?") && loggedInUser.userId === post.creator) {
+      // remove all the comments made inside the doc
+      comments.forEach(async (comment) => await deleteDoc(doc(db, "comments", comment)))
       await deleteDoc(doc(db, "posts", postId));
       navigate(-1)
     }

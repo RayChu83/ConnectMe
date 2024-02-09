@@ -88,6 +88,7 @@ export default function HomeSectionTwo() {
       <form className="search--bar">
         <button onClick={handleSearch}><i className="fa-solid fa-magnifying-glass understated"></i></button>
         <input type="text" placeholder="Search" ref={searchBarRef} onChange={handleSearchbarChange} value={searchbar}></input>
+        <button className='unstyled--btn pointer' type='button' onClick={() => setSearchbar("")} style={!searchbar ? {display : "none"}: null}><h3 className='margin--zero'><i class="fa-solid fa-xmark danger--text"></i></h3></button>
       </form>
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
