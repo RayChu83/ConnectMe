@@ -24,7 +24,10 @@ a{
   padding: 10px 12px;
   border-radius: 12px;
   cursor: pointer;
-  transition: 0.2s ease-in-out;
+  transition: 0.1s ease-in-out;
+}
+.cta:hover{
+  background-color: #463b8a;
 }
 .text--cta{
   color: #8279bd;
@@ -103,4 +106,9 @@ a{
 }
 .smaller--fontsize{
   font-size: .9em;
+}
+#error{
+  width: 100%;
+  max-width: 300px;
+  height: auto;
 }

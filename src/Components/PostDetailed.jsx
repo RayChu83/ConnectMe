@@ -71,6 +71,9 @@ export default function PostDetailed() {
     })
     setNewComment("")
   }
+  const navigateBack = () => {
+    navigate(-1)
+  }
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "posts", postId), (doc) => {
       if (doc.exists()) {
@@ -106,7 +109,7 @@ export default function PostDetailed() {
               <section id="post--comments">
                 <form className="post--comments--form" onSubmit={handleNewComment}>
                   <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
-                  <input type="text" placeholder="Comment..." maxLength="250" value={newComment} onChange={(e) => {setNewComment(e.target.value)}}></input>
+                  <input type="text" placeholder="Reply To Post" maxLength="250" value={newComment} onChange={(e) => {setNewComment(e.target.value)}}></input>
                   <button type="submit" className="cta" disabled={!newComment && true}>Reply</button>
                 </form>
                 <div className='comments--container'></div>
@@ -153,6 +156,6 @@ export default function PostDetailed() {
             <UserDetails id={post.creator}/>
           </main>
         : 
-          post === null ? <p className='understated text--center top--padding'>Loading...</p> : <p className='understated text--center top--padding'>No post found, <Link className='text--cta'>return home</Link></p>
+          post === null ? <p className='understated text--center top--padding'>Loading...</p> : <p className='understated text--center top--padding'>Post does not exist, <span onClick={navigateBack} className='text--cta pointer'>go back</span></p>
   )
 }
