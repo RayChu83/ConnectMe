@@ -122,7 +122,7 @@ export default function ProfileLayout() {
               </Link>
               {loggedInUser?.userId === user?.userId ? <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big> : user?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}><i class="fa-solid fa-user-minus"></i> Unfollow</button> : <button className='cta' onClick={follow}><i class="fa-solid fa-user-plus"></i> Follow</button>}
             </div>
-            <p className={!user.description ? "understated" : null}>{user.description || "No description found..."}</p>
+            <p className={`${!user.description ? "understated" : null} text--wrapped`}>{user.description || "No description found..."}</p>
             {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}
             <p className='user--following--followers'><NavLink to="following" className='heading pointer'>{[...new Set(user.following)].length} Following</NavLink><NavLink to="followers" className='heading pointer'>{[...new Set(user.followers)].length} Follower{[...new Set(user.followers)].length !== 1 && "s"}</NavLink></p>
             <Outlet/>

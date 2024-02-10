@@ -50,7 +50,7 @@ export default function Post(props) {
           </small>
         </div>
         <section className="post-content">
-          <small className='bottom--margin--zero pointer'>{props.content}</small>
+          <small className='bottom--margin--zero pointer text--wrapped'>{props.content}</small>
         </section>
           <section className="post--interactions">
             <aside>

@@ -31,8 +31,8 @@ export default function HomeSectionThree() {
       <Link to={`/user/${loggedInUser?.userId}`}>
         <section id="profile">
           <img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt="Users Logo" width="125" height="125"></img>
-          <h2>{loggedInUser?.username || "-----"}</h2>
-          <small className='understated'>{loggedInUser?.description}</small>
+          <h2 className='text--wrapped'>{loggedInUser?.username || "-----"}</h2>
+          <small className='understated text--wrapped'>{loggedInUser?.description}</small>
         </section>
       </Link>
       <article>

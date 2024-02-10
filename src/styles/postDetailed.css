@@ -4,6 +4,8 @@
   column-gap: 20px;
   border-radius: 20px;
   transition: filter 0.3s;
+  min-height: 0; 
+  min-width: 0;
 }
 #post--detail--container > section, #post--detail--container > aside{
   background-color: #16161e;
@@ -11,6 +13,8 @@
   border-radius: 20px;
   height: fit-content;
   transition: 0.2s ease-in-out;
+  overflow: hidden; 
+  min-width: 0
 }
 #post--detail--container > section:hover, #post--detail--container > aside:hover{
   filter: drop-shadow(0 3px 5px #121218);

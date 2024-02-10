@@ -80,7 +80,7 @@ export default function Comment(props) {
             }
           </div>
         <small className='understated'>{convertDate(comment.created)}</small>
-        <p className='pointer'>{comment.content}</p>
+        <p className='pointer text--wrapped'>{comment.content}</p>
         {comment.likes?.includes(loggedInUser?.userId) 
         ? <button className='unstyled--btn liked pointer liked smaller--fontsize no-padding' onClick={unlike}><i className="fa-solid fa-thumbs-up liked"></i> {comment.likes.length} Like{comment.likes?.length !== 1 && "s"}</button> 
         : <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i className="fa-solid fa-thumbs-up understated"></i> {comment.likes.length} Like{comment.likes?.length !== 1 && "s"}</button>}

@@ -112,3 +112,6 @@ a{
   max-width: 300px;
   height: auto;
 }
+.text--wrapped{
+  word-wrap: break-word;
+}

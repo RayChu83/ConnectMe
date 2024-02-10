@@ -50,7 +50,7 @@ export default function UserPreview(props) {
             {/* checks for following status and also if potentially you are that user your viewing */}
             {userDetails?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}>Unfollow</button> : userDetails?.userId !== loggedInUser?.userId && <button className='cta' onClick={follow}>Follow</button>}
           </article>
-          <small className='understated'>{userDetails?.description?.substring(0, 50) || "No description found"}{userDetails?.description.length > 50 && "..."}</small>
+          <small className='understated text--wrapped'>{userDetails?.description?.substring(0, 50) || "No description found"}{userDetails?.description.length > 50 && "..."}</small>
         </section>
       )
   )
