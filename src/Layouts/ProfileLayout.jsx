@@ -117,7 +117,7 @@ export default function ProfileLayout() {
               <Link to="">
                 <article>
                   <img className="profile--img" src={user.pfp || profileImageLoading} alt={user.username} ></img>
-                  <h1 className='overstated'>{user.username || "Anonymous"}</h1>
+                  <h1 className='overstated'>@{user.username || "Anonymous"}</h1>
                 </article>
               </Link>
               {loggedInUser?.userId === user?.userId ? <big onClick={editProfile}><i className="fa-regular fa-pen-to-square"></i></big> : user?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}><i class="fa-solid fa-user-minus"></i> Unfollow</button> : <button className='cta' onClick={follow}><i class="fa-solid fa-user-plus"></i> Follow</button>}

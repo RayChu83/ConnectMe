@@ -17,6 +17,7 @@ import ProfileLayout from './Layouts/ProfileLayout';
 import ProfileFollowing from './Components/ProfileFollowing';
 import ProfileFollowers from './Components/ProfileFollowers';
 import PostDetailed from './Components/PostDetailed';
+import ErrorPage from './Components/ErrorPage';
 
 function App() {
   return (
@@ -32,13 +33,15 @@ function App() {
                   <Route path='following' element={<ProfileFollowing/>}/>
                   <Route path='followers' element={<ProfileFollowers/>}/>
                 </Route>
+                <Route path='post/:id' element={<PostDetailed />}/>
+                <Route path='about' element={<About />}/>
+                <Route path="*" element={<ErrorPage/>}/>
               </Route>
-              <Route path='about' element={<About />}/>
-              <Route path='post/:id' element={<PostDetailed />}/>
             </Route>
             <Route element={<LoggedOutProtectedLayout />}>
               <Route path='login' element={<Login />}/>
               <Route path='register' element={<Register />}/>
+              <Route path="*" element={<ErrorPage/>}/>
             </Route>
           </Route>
         </Routes>

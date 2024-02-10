@@ -36,8 +36,8 @@ export default function UserDetails(props) {
             <Link to={`/user/${postCreator.userId}`}>
               <img className="profile--img" src={postCreator.pfp || profileImageLoading} alt="Users Logo" width="125" height="125"></img>
               <h2>{postCreator.username || "------"}</h2>
+              <small className='understated'>{postCreator.description}</small>
             </Link>
-            <small className='understated'>{postCreator.description}</small>
           </section>
           {postCreatorsRecentPost.map((post, index) => (
             <Post postId={post.id} creator={post.creator} content={post.content} created={post.created} likes={post.likes} comments={post.comments} key={index}/>
