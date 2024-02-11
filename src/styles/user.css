@@ -23,7 +23,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
-.user--edit--heading{
+.user--edit--heading, #profile--edit--form label{
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -97,7 +97,7 @@ export default function HomeSectionTwo() {
           <button type="submit" className="cta" disabled={!newPostContent && true}>Post</button>
         </form>
         <hr />
-        <small className='understated'>{newPostContent.length}/750</small>
+        <small className={newPostContent.length === 750 ? "danger--text" : "understated"}>{newPostContent.length}/750</small>
           {displayedPosts ? displayedPosts.map((post, index) => (
             <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} comments={post.comments} key={index}/>
           )) : <p className='understated text--center'>Loading...</p>}
