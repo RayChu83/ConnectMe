@@ -4,7 +4,7 @@ import { auth, db } from '../Firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Outlet } from 'react-router-dom';
 
-import { setLoggedInTrue, setLoggedInFalse, setLoggedInUser, setLoggedInUserCleared, setLoggedInUsersPostsCleared } from '../Redux/actions/actions';
+import { setLoggedInTrue, setLoggedInFalse, setLoggedInUser, setLoggedInUserCleared } from '../Redux/actions/actions';
 import { doc, getDoc} from 'firebase/firestore';
 
 export default function UserLayout() {
@@ -22,7 +22,6 @@ export default function UserLayout() {
       } else {
         dispatch(setLoggedInFalse())
         dispatch(setLoggedInUserCleared())
-        dispatch(setLoggedInUsersPostsCleared())
       }
       });
       // eslint-disable-next-line
