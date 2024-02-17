@@ -74,8 +74,8 @@ export default function Comment(props) {
             </Link>
             {loggedInUser.userId === comment.userId && 
             <article>
-              <button className='unstyled--btn pointer smaller--fontsize' onClick={editComment}><i className="fa-solid fa-pen-to-square green--text"></i></button>
-              <button className='unstyled--btn pointer smaller--fontsize' onClick={removeComment}><i className="fa-solid fa-trash danger--text"></i></button>
+              <button className='unstyled--btn pointer smaller--fontsize' onClick={editComment}><i className="fa-solid fa-pen-to-square understated"></i></button>
+              <button className='unstyled--btn pointer smaller--fontsize' onClick={removeComment}><i className="fa-solid fa-trash understated"></i></button>
             </article>
             }
           </div>

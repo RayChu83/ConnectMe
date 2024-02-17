@@ -126,8 +126,8 @@ export default function PostDetailed() {
                   </Link>
                   {loggedInUser.userId === post.creator && 
                   <article>
-                    <button className='unstyled--btn pointer smaller--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square green--text"></i></button>
-                    <button className='unstyled--btn pointer smaller--fontsize' onClick={removePost}><i className="fa-solid fa-trash danger--text"></i></button>
+                    <button className='unstyled--btn pointer smaller--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square understated"></i></button>
+                    <button className='unstyled--btn pointer smaller--fontsize' onClick={removePost}><i className="fa-solid fa-trash understated"></i></button>
                   </article>}  
                 </div>
                 <small className="understated">
