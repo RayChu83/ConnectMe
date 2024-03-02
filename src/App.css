@@ -50,6 +50,9 @@ a{
 .pointer{
   cursor: pointer;
 }
+.not--allowed{
+  cursor: not-allowed;
+}
 .danger--text{
   color: rgb(149, 52, 52);
 }

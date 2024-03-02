@@ -9,6 +9,7 @@ import "../styles/postDetailed.css"
 import Comment from './Comment'
 import UserDetails from './UserDetails'
 import { v4 } from 'uuid'
+import { Helmet } from 'react-helmet'
 
 export default function PostDetailed() {
   const postId = useParams().id
@@ -104,57 +105,62 @@ export default function PostDetailed() {
   }, [post?.creator])
   return ( 
         post ? 
-          <main id='post--detail--container'>
-            <section>
-              <section id="post--comments">
-                <form className="post--comments--form" onSubmit={handleNewComment}>
-                  <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
-                  <input type="text" placeholder="Reply To Post" maxLength="250" value={newComment} onChange={(e) => {setNewComment(e.target.value)}}></input>
-                  <button type="submit" className="cta" disabled={!newComment && true}>Reply</button>
-                </form>
-                <div className='comments--container'></div>
-              </section>
-              <hr />
-              <small className='understated'>{newComment.length}/250</small>
-              <article className="post" style={{maxHeight: "unset"}} onDoubleClick={like}>
-                <div className="post--details" style={{flexDirection : "unset", alignItems : "center"}}>
-                  <Link to={`/user/${post.creator}`}>
-                    <div className="user--details">
-                    <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} alt={creatorDetails?.username}></img>
-                    <h3>{creatorDetails?.username}</h3>
-                    </div>
-                  </Link>
-                  {loggedInUser.userId === post.creator && 
-                  <article>
-                    <button className='unstyled--btn pointer smaller--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square understated"></i></button>
-                    <button className='unstyled--btn pointer smaller--fontsize' onClick={removePost}><i className="fa-solid fa-trash understated"></i></button>
-                  </article>}  
-                </div>
-                <small className="understated">
-                  {convertDate(post.created)}
-                </small>
-                <section className="post-content">
-                  <p className='bottom--margin--zero pointer text--wrapped'>{post.content}</p>
+          <>
+            <Helmet>
+              <title>Post Details</title>
+            </Helmet>
+            <main id='post--detail--container'>
+              <section>
+                <section id="post--comments">
+                  <form className="post--comments--form" onSubmit={handleNewComment}>
+                    <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
+                    <input type="text" placeholder="Reply To Post" maxLength="250" value={newComment} onChange={(e) => {setNewComment(e.target.value)}}></input>
+                    <button type="submit" className="cta" disabled={!newComment && true}>Reply</button>
+                  </form>
+                  <div className='comments--container'></div>
                 </section>
-                <section className="post--interactions">
-                  {post.likes?.includes(loggedInUser?.userId) 
-                  ? 
-                  <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i className="fa-solid fa-thumbs-up liked"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button> 
-                  : 
-                  <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i className="fa-solid fa-thumbs-up understated"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button>
-                }
+                <hr />
+                <small className='understated'>{newComment.length}/250</small>
+                <article className="post" style={{maxHeight: "unset"}} onDoubleClick={like}>
+                  <div className="post--details" style={{flexDirection : "unset", alignItems : "center"}}>
+                    <Link to={`/user/${post.creator}`}>
+                      <div className="user--details">
+                      <img className="profile--img" src={creatorDetails?.pfp || profileImageLoading} alt={creatorDetails?.username}></img>
+                      <h3>{creatorDetails?.username}</h3>
+                      </div>
+                    </Link>
+                    {loggedInUser.userId === post.creator && 
+                    <article>
+                      <button className='unstyled--btn pointer smaller--fontsize' onClick={editPost}><i className="fa-solid fa-pen-to-square understated"></i></button>
+                      <button className='unstyled--btn pointer smaller--fontsize' onClick={removePost}><i className="fa-solid fa-trash understated"></i></button>
+                    </article>}  
+                  </div>
+                  <small className="understated">
+                    {convertDate(post.created)}
+                  </small>
+                  <section className="post-content">
+                    <p className='bottom--margin--zero pointer text--wrapped'>{post.content}</p>
+                  </section>
+                  <section className="post--interactions">
+                    {post.likes?.includes(loggedInUser?.userId) 
+                    ? 
+                    <button className='unstyled--btn pointer liked smaller--fontsize no-padding' onClick={unlike}><i className="fa-solid fa-thumbs-up liked"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button> 
+                    : 
+                    <button className='unstyled--btn pointer understated smaller--fontsize no-padding' onClick={like}><i className="fa-solid fa-thumbs-up understated"></i> {post.likes?.length || 0} Like{post.likes?.length !== 1 && "s"}</button>
+                  }
+                  </section>
+                </article>
+                <h3>Comments ({comments?.length}):</h3>
+                <section id="comments--container">
+                  {/* reversing the order since we push new comments so the most recent is the last item in the array */}
+                  {[...comments].reverse().map((comment) => <Comment key={comment} commentId={comment}/>)}
+                
+                {comments?.length === 0 && <p className='text--center understated'>Visible comments will appear here</p>}
                 </section>
-              </article>
-              <h3>Comments ({comments?.length}):</h3>
-              <section id="comments--container">
-                {/* reversing the order since we push new comments so the most recent is the last item in the array */}
-                {[...comments].reverse().map((comment) => <Comment key={comment} commentId={comment}/>)}
-              
-              {comments?.length === 0 && <p className='text--center understated'>Visible comments will appear here</p>}
-              </section>
-            </section> 
-            <UserDetails id={post.creator}/>
-          </main>
+              </section> 
+              <UserDetails id={post.creator}/>
+            </main>
+          </>
         : 
           post === null ? <p className='understated text--center top--padding'>Loading...</p> : <p className='understated text--center top--padding'>Post does not exist, <span onClick={navigateBack} className='text--cta pointer'>go back</span></p>
   )

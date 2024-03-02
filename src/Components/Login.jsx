@@ -5,6 +5,7 @@ import { auth, db, provider } from '../Firebase/firebase'
 import Google from "../Images/googleLogo.png"
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { Helmet } from 'react-helmet'
 
 export default function Login() {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -50,20 +51,25 @@ export default function Login() {
     setFormData({email : "demo@demo.demo", password : "demo1234"})
   }
   return (
-    <section>
-      <h1>Log In to an existing <br /> account.</h1>
-      <p className='danger--text'>{error && `* ${error}`}</p>
-      <form className='account--access--forms' onSubmit={handleSubmit}>
-        <label htmlFor="login--email">Email Address:</label>
-        <input name='email' onChange={updateFormData} value={formData.email} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>
-        <label htmlFor="login--password">Password:</label>
-        <input name='password' onChange={updateFormData} value={formData.password} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' required autoComplete='true'/>
-        <small className='understated pointer' onClick={changePasswordVisibility}>{isPasswordShown ? "Hide Password" : "Show Password"}</small>
-        <button className='auth--btn google--account--access' type='button' onClick={googleLogin}><img src={Google} alt="Google Logo" height="16"/>Login With Google</button>
-        <button className='auth--btn demo--access' onClick={demo} type='submit'><i class="fa-regular fa-clock"></i> Try With Demo</button>
-        <button className='cta expand'>Login</button>
-      </form>
-      <small>Don't have an account, <strong><Link to="/register" replace>Register</Link></strong></small>
-    </section>
+    <>
+      <Helmet>
+        <title>Login to an existing account</title>
+      </Helmet>
+      <section>
+        <h1>Log In to an existing <br /> account.</h1>
+        <p className='danger--text'>{error && `* ${error}`}</p>
+        <form className='account--access--forms' onSubmit={handleSubmit}>
+          <label htmlFor="login--email">Email Address:</label>
+          <input name='email' onChange={updateFormData} value={formData.email} type="text" placeholder='Email Address' id='login--email' required autoComplete='true'/>
+          <label htmlFor="login--password">Password:</label>
+          <input name='password' onChange={updateFormData} value={formData.password} type={isPasswordShown ? "text" : "password"} placeholder='Password' id='login--password' required autoComplete='true'/>
+          <small className='understated pointer' onClick={changePasswordVisibility}>{isPasswordShown ? "Hide Password" : "Show Password"}</small>
+          <button className='auth--btn google--account--access' type='button' onClick={googleLogin}><img src={Google} alt="Google Logo" height="16"/>Login With Google</button>
+          <button className='auth--btn demo--access' onClick={demo} type='submit'><i class="fa-regular fa-clock"></i> Try With Demo</button>
+          <button className='cta expand'>Login</button>
+        </form>
+        <small>Don't have an account, <strong><Link to="/register" replace>Register</Link></strong></small>
+      </section>
+    </>
   )
 }

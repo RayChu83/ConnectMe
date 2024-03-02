@@ -8,6 +8,7 @@ import { setAllPosts, setSearchbarUnfocused } from '../Redux/actions/actions';
 import { db } from '../Firebase/firebase';
 import Post from './Post';
 import profileImageLoading from "../Images/loadingProfile.jpg"
+import PostsSkeleton from './PostsSkeleton';
 
 export default function HomeSectionTwo() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -88,19 +89,19 @@ export default function HomeSectionTwo() {
       <form className="search--bar">
         <button onClick={handleSearch}><i className="fa-solid fa-magnifying-glass understated"></i></button>
         <input type="text" placeholder="Search" ref={searchBarRef} onChange={handleSearchbarChange} value={searchbar}></input>
-        <button className='unstyled--btn pointer' type='button' onClick={() => setSearchbar("")} style={!searchbar ? {display : "none"}: null}><h3 className='margin--zero'><i class="fa-solid fa-xmark danger--text"></i></h3></button>
+        <button className='unstyled--btn pointer' type='button' onClick={() => setSearchbar("")} style={!searchbar ? {display : "none"}: null}><h3 className='margin--zero'><i className="fa-solid fa-xmark danger--text"></i></h3></button>
       </form>
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
           <Link to={`/user/${loggedInUser?.userId}`}><img className="profile--img" src={loggedInUser?.pfp || profileImageLoading} alt={loggedInUser?.username}></img></Link>
           <input type="text" placeholder="Hey 👋" value={newPostContent} onChange={handleNewPostContentChange} maxLength="750"></input>
-          <button type="submit" className="cta" disabled={!newPostContent && true}>Post</button>
+          <button type="submit" className={`cta ${!newPostContent && "not--allowed"}`} disabled={!newPostContent && true}>Post</button>
         </form>
         <hr />
         <small className={newPostContent.length === 750 ? "danger--text" : "understated"}>{newPostContent.length}/750</small>
           {displayedPosts ? displayedPosts.map((post, index) => (
             <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} comments={post.comments} key={index}/>
-          )) : <p className='understated text--center'>Loading...</p>}
+          )) : <><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /></>}
       </div>
     </div>
   )

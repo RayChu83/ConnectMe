@@ -6,6 +6,7 @@ import Post from './Post'
 import profileImageLoading from "../Images/loadingProfile.jpg"
 import { collection, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
+import PostsSkeleton from './PostsSkeleton';
 
 export default function HomeSectionThree() {
   const loggedInUser = useSelector(state => state.loggedInUser)
@@ -41,7 +42,7 @@ export default function HomeSectionThree() {
             loggedInUsersPost.map((post, index) => <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} comments={post.comments} key={index} />) 
           : 
             // default value has a empty array, if fetched and still empty, state changes to null
-            loggedInUsersPost?.length === 0 ? <p className='understated text--center'>Loading..</p> : <p className='understated text--center'>Visible posts will appear here!</p>
+            loggedInUsersPost?.length === 0 ? <><PostsSkeleton /><PostsSkeleton /></> : <p className='understated text--center'>Visible posts will appear here!</p>
         }
       </article>
       <Link to={`/user/${loggedInUser?.userId}`}>

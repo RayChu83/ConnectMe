@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { Outlet, Link, NavLink, useParams } from 'react-router-dom'
 
@@ -93,6 +94,10 @@ export default function ProfileLayout() {
   return (
     user ? 
         <>
+          <Helmet >
+            <title>{user.username} | Profile</title>
+            <meta name="description" content={`${user.username} profile page. About the user: ${user.description}`}/>
+          </Helmet>
           {loggedInUser?.userId === user?.userId &&
             <section id='user--edit' className={isProfilePopUpVisible ? "visible" : ""}>
               <article className='user--edit--heading'>
@@ -120,7 +125,7 @@ export default function ProfileLayout() {
                   <h1 className='overstated'>@{user.username || "Anonymous"}</h1>
                 </article>
               </Link>
-              {loggedInUser?.userId === user?.userId ? <big onClick={editProfile}><i className="fa-regular fa-pen-to-square understated"></i></big> : user?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}><i class="fa-solid fa-user-minus"></i> Unfollow</button> : <button className='cta' onClick={follow}><i class="fa-solid fa-user-plus"></i> Follow</button>}
+              {loggedInUser?.userId === user?.userId ? <big onClick={editProfile}><i className="fa-regular fa-pen-to-square understated"></i></big> : user?.followers.includes(loggedInUser?.userId) ? <button className='danger--btn' onClick={unfollow}><i className="fa-solid fa-user-minus"></i> Unfollow</button> : <button className='cta' onClick={follow}><i className="fa-solid fa-user-plus"></i> Follow</button>}
             </div>
             <p className={`${!user.description ? "understated" : null} text--wrapped`}>{user.description || "No description found..."}</p>
             {/* Ensures that even if possibly a user is following a person twice, it will not be shown */}

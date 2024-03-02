@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 export default function HomeSectionOne() {
   const loggedInUser = useSelector(state => state.loggedInUser)
   const following = useSelector(state => [...new Set(state.loggedInUser?.following)])
+  console.log(following)
   return (
     <aside id="section--one" className="section">
       <h3 className="heading">You're Following...</h3>
