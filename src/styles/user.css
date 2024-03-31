@@ -4,6 +4,10 @@
     padding: 40px 25px 25px 25px;
     transition: filter 0.3s;
 }
+#user:hover{
+    box-shadow: 0 3px 5px #121218;
+    transition: 0.3s;
+}
 .user--following--followers{
     display: flex;
     gap: 12px;

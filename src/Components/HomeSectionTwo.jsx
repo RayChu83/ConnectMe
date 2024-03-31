@@ -24,6 +24,8 @@ export default function HomeSectionTwo() {
 
   const navigate = useNavigate()
 
+  console.log(displayedPosts?.length)
+
   const handleSearchbarChange = (e) => {
     setSearchbar(e.target.value)
   }
@@ -89,7 +91,7 @@ export default function HomeSectionTwo() {
       <form className="search--bar">
         <button onClick={handleSearch}><i className="fa-solid fa-magnifying-glass understated"></i></button>
         <input type="text" placeholder="Search" ref={searchBarRef} onChange={handleSearchbarChange} value={searchbar}></input>
-        <button className='unstyled--btn pointer' type='button' onClick={() => setSearchbar("")} style={!searchbar ? {display : "none"}: null}><h3 className='margin--zero'><i className="fa-solid fa-xmark danger--text"></i></h3></button>
+        <button className='unstyled--btn pointer' type='button' onClick={() => setSearchbar("")} style={!searchbar ? {display : "none"}: null}><h3 className='margin--zero'><i className="fa-solid fa-xmark understated"></i></h3></button>
       </form>
       <div className="section">
         <form className="post--form" onSubmit={handleNewPost}>
@@ -99,9 +101,9 @@ export default function HomeSectionTwo() {
         </form>
         <hr />
         <small className={newPostContent.length === 750 ? "danger--text" : "understated"}>{newPostContent.length}/750</small>
-          {displayedPosts ? displayedPosts.map((post, index) => (
+          {displayedPosts?.length ? displayedPosts.map((post, index) => (
             <Post creator={post.creator} content={post.content} created={post.created} postId={post.id} likes={post.likes} comments={post.comments} key={index}/>
-          )) : <><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /></>}
+          )) : displayedPosts?.length === 0 ? <p className='understated text--center top--padding'>No Posts Found, Try searching for something else.</p> : <><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /><PostsSkeleton /></>}
       </div>
     </div>
   )

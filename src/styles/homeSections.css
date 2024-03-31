@@ -6,8 +6,11 @@ main .section{
   padding: 25px;
   transition: .2s ease-in-out;
 }
-main .section:hover, .search--bar:hover{
+main .section:hover{
   filter: drop-shadow(0 3px 5px #121218);
+}
+.search--bar:hover{
+  filter: drop-shadow(0 2px 4px #121218);
 }
 #sections--container{
   display: grid;
