@@ -5,12 +5,7 @@ main .section{
   border-radius: 12px;
   padding: 25px;
   transition: .2s ease-in-out;
-}
-main .section:hover{
-  filter: drop-shadow(0 3px 5px #121218);
-}
-.search--bar:hover{
-  filter: drop-shadow(0 2px 4px #121218);
+  outline: 1px solid #292b3d;
 }
 #sections--container{
   display: grid;
@@ -26,7 +21,6 @@ main .section:hover{
   min-width: 0;
 }
 #sections--container #section--two{
-  overflow: hidden;
   min-width: 0;
 }
 
@@ -63,6 +57,7 @@ main .section:hover{
   margin-bottom: 20px;
   border-radius: 12px;
   transition: .2s ease-in-out;
+  filter: drop-shadow(0 3px 5px #121218);
 }
 .search--bar button, .search--bar input{
   background-color: transparent;

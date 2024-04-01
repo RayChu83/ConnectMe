@@ -108,7 +108,7 @@ export default function ProfileLayout() {
                 <label htmlFor="edit--username">Username: <small className={profilePopUpData?.username.length === 20 || profilePopUpData?.username.length === 0 ? "danger--text" : "understated"}>{profilePopUpData?.username.length}/20</small></label>
                 <input type="text" id='edit--username' value={profilePopUpData?.username} name='username' onChange={handleChange} maxLength="20" placeholder='Username' required/>
                 <label htmlFor="edit--email">Email:</label>
-                <input type="text" id='edit--email' value={profilePopUpData?.email} readOnly className='understated' name='email' onChange={handleChange}/>
+                <input type="text" id='edit--email' value={profilePopUpData?.email} readOnly className='understated not--allowed' name='email' onChange={handleChange}/>
                 <label htmlFor="edit--description">Description: <small className={profilePopUpData?.description.length === 250 ? "danger--text" : "understated"}>{profilePopUpData?.description.length}/250</small></label>
                 <input type="text" id='edit--description' value={profilePopUpData?.description} name='description' onChange={handleChange} maxLength="250" placeholder='Description'/>
                 <label htmlFor="edit--pfp">Profile Picture:</label>

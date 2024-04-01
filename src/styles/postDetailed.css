@@ -14,10 +14,8 @@
   height: fit-content;
   transition: 0.2s ease-in-out;
   overflow: hidden; 
-  min-width: 0
-}
-#post--detail--container > section:hover, #post--detail--container > aside:hover{
-  filter: drop-shadow(0 3px 5px #121218);
+  min-width: 0;
+  outline: 1px solid #292b3d;
 }
 #post--detail--container > aside{
   position: sticky;
